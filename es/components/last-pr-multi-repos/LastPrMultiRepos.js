@@ -22,7 +22,7 @@ var LastPrMultiRepos = function (_Component) {
         var repositories = _ref.repositories;
 
         return {
-            id: 'githubLocal.pullRequestsMultiCompte.' + repositories,
+            id: 'github.pullRequestsMultiCompte.' + repositories,
             params: { repositories: repositories }
         };
     };

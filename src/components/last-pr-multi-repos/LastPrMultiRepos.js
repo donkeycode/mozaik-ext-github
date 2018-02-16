@@ -15,7 +15,7 @@ export default class LastPrMultiRepos extends Component {
 
     static getApiRequest({ repositories }) {
         return {
-            id: `githubLocal.pullRequestsMultiCompte.${repositories}`,
+            id: `github.pullRequestsMultiCompte.${repositories}`,
             params: { repositories }
         }
     }
