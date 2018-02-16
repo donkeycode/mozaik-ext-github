@@ -91,20 +91,20 @@
     ]
   },
   "config": {
-      "scope": {
-        "required": true,
-        "allowed": [
-          "*"
-        ],
-        "validate": false,
-        "multiple": false
-      },
-      "warnOnFail": false,
-      "maxSubjectLength": 80,
-      "subjectPattern": ".+",
-      "subjectPatternErrorMsg": "subject does not match subject pattern!",
-      "helpMessage": "",
-      "autoFix": false
-    }
+    "scope": {
+      "required": true,
+      "allowed": [
+        "*"
+      ],
+      "validate": false,
+      "multiple": false
+    },
+    "warnOnFail": false,
+    "maxSubjectLength": 80,
+    "subjectPattern": ".+",
+    "subjectPatternErrorMsg": "subject does not match subject pattern!",
+    "helpMessage": "",
+    "autoFix": false
   }
 }
+
