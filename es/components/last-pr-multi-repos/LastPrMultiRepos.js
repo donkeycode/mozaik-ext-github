@@ -35,11 +35,10 @@ var LastPrMultiRepos = function (_Component) {
             apiError = _props.apiError;
 
 
-        console.log(apiData);
-
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
         if (apiData) {
+            console.log(apiData);
             // body = (
             //     <div>
             //         {this.repositories.map(PullRequests => {

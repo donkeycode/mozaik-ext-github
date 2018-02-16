@@ -73,24 +73,14 @@ var client = function client(mozaik) {
                 return body;
             });
         },
-        repository: function (_repository) {
-            function repository(_x) {
-                return _repository.apply(this, arguments);
-            }
+        repository: function repository(_ref4) {
+            var _repository = _ref4.repository;
 
-            repository.toString = function () {
-                return _repository.toString();
-            };
-
-            return repository;
-        }(function (_ref4) {
-            var repository = _ref4.repository;
-
-            return buildApiRequest('/repos/' + repository).then(function (_ref5) {
+            return buildApiRequest('/repos/' + _repository).then(function (_ref5) {
                 var body = _ref5.body;
                 return body;
             });
-        }),
+        },
         pullRequests: function pullRequests(_ref6) {
             var repository = _ref6.repository;
 
@@ -106,25 +96,26 @@ var client = function client(mozaik) {
 
             var repositories = _ref8.repositories;
 
-            repositories.forEach(function (_ref9) {
-                var repo = _ref9.repo;
-
-                return _this.apiCalls.pullRequests({ repository: repository });
+            // repositories.forEach(({ repository }) => {
+            //     return this.apiCalls.pullRequests({ repository });
+            // });
+            repositories.map(function (repository) {
+                return _this.apiCalls.pullRequests(repository);
             });
         },
-        repositoryParticipationStats: function repositoryParticipationStats(_ref10) {
-            var repository = _ref10.repository;
+        repositoryParticipationStats: function repositoryParticipationStats(_ref9) {
+            var repository = _ref9.repository;
 
-            return buildApiRequest('/repos/' + repository + '/stats/participation').then(function (_ref11) {
-                var body = _ref11.body;
+            return buildApiRequest('/repos/' + repository + '/stats/participation').then(function (_ref10) {
+                var body = _ref10.body;
                 return body;
             });
         },
-        repositoryLanguages: function repositoryLanguages(_ref12) {
-            var repository = _ref12.repository;
+        repositoryLanguages: function repositoryLanguages(_ref11) {
+            var repository = _ref11.repository;
 
-            return buildApiRequest('/repos/' + repository + '/languages').then(function (_ref13) {
-                var body = _ref13.body;
+            return buildApiRequest('/repos/' + repository + '/languages').then(function (_ref12) {
+                var body = _ref12.body;
                 return body;
             });
         },
@@ -141,17 +132,17 @@ var client = function client(mozaik) {
                 return { branches: branches };
             });
         },
-        branch: function branch(_ref14) {
-            var repository = _ref14.repository,
-                _branch = _ref14.branch;
+        branch: function branch(_ref13) {
+            var repository = _ref13.repository,
+                _branch = _ref13.branch;
 
-            return buildApiRequest('/repos/' + repository + '/branches/' + _branch).then(function (_ref15) {
-                var body = _ref15.body;
+            return buildApiRequest('/repos/' + repository + '/branches/' + _branch).then(function (_ref14) {
+                var body = _ref14.body;
                 return body;
             });
         },
-        repositoryContributorsStats: function repositoryContributorsStats(_ref16) {
-            var repository = _ref16.repository;
+        repositoryContributorsStats: function repositoryContributorsStats(_ref15) {
+            var repository = _ref15.repository;
 
             return buildApiRequest('/repos/' + repository + '/stats/contributors').then(function (res) {
                 return {
@@ -159,8 +150,8 @@ var client = function client(mozaik) {
                 };
             });
         },
-        repoCommitActivity: function repoCommitActivity(_ref17) {
-            var repository = _ref17.repository;
+        repoCommitActivity: function repoCommitActivity(_ref16) {
+            var repository = _ref16.repository;
 
             return buildApiRequest('/repos/' + repository + '/stats/commit_activity').then(function (res) {
                 return {
@@ -175,11 +166,11 @@ var client = function client(mozaik) {
                 max: 1000
             });
         },
-        issues: function issues(_ref18) {
-            var repository = _ref18.repository;
+        issues: function issues(_ref17) {
+            var repository = _ref17.repository;
 
-            return buildApiRequest('/repos/' + repository + '/issues').then(function (_ref19) {
-                var body = _ref19.body;
+            return buildApiRequest('/repos/' + repository + '/issues').then(function (_ref18) {
+                var body = _ref18.body;
                 return body;
             });
         },
@@ -214,19 +205,19 @@ var client = function client(mozaik) {
                 return res.body;
             });
         },
-        trafficViews: function trafficViews(_ref20) {
-            var repository = _ref20.repository;
+        trafficViews: function trafficViews(_ref19) {
+            var repository = _ref19.repository;
 
-            return buildApiRequest('/repos/' + repository + '/traffic/views').then(function (_ref21) {
-                var body = _ref21.body;
+            return buildApiRequest('/repos/' + repository + '/traffic/views').then(function (_ref20) {
+                var body = _ref20.body;
                 return body;
             });
         },
-        trafficClones: function trafficClones(_ref22) {
-            var repository = _ref22.repository;
+        trafficClones: function trafficClones(_ref21) {
+            var repository = _ref21.repository;
 
-            return buildApiRequest('/repos/' + repository + '/traffic/clones').then(function (_ref23) {
-                var body = _ref23.body;
+            return buildApiRequest('/repos/' + repository + '/traffic/clones').then(function (_ref22) {
+                var body = _ref22.body;
                 return body;
             });
         }
