@@ -79,6 +79,11 @@ const client = mozaik => {
                 pullRequests,
             }))
         },
+        pullRequestsMultiCompte({ repositories }) {
+            repositories.forEach(({ repo }) => {
+                return this.apiCalls.pullRequests({ repository });
+            });
+        },
 
         repositoryParticipationStats({ repository }) {
             return buildApiRequest(`/repos/${repository}/stats/participation`).then(
