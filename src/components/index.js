@@ -9,6 +9,7 @@
 
 import Branches from './Branches'
 import PullRequests from './pull-requests/PullRequests'
+import LastPrMultiRepos from './last-pr-multi-repos/LastPrMultiRepos'
 import UserBadge from './badges/UserBadge'
 import OrgBadge from './badges/OrgBadge'
 import RepoBadge from './badges/RepoBadge'
@@ -35,4 +36,5 @@ export default {
     RepoTrafficClonesLine,
     RepoCommitActivityHistogram,
     RepoCommitActivityLine,
+    LastPrMultiRepos
 }
