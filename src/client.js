@@ -80,9 +80,17 @@ const client = mozaik => {
             }))
         },
         pullRequestsMultiCompte({ repositories }) {
-            repositories.forEach(({ repo }) => {
-                return this.apiCalls.pullRequests({ repository });
-            });
+            // repositories.forEach(({ repository }) => {
+            //     return this.apiCalls.pullRequests({ repository });
+            // });
+            var repos = [];
+            repositories.map(repository => {
+                repos.push(buildApiRequest(`/repos/${repository}/pulls`)
+                .then(({ body: pullRequests }) => ({
+                    pullRequests,
+                })))
+            })
+            return repos;
         },
 
         repositoryParticipationStats({ repository }) {

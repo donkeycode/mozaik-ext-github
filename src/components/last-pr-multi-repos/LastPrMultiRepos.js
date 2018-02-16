@@ -23,11 +23,10 @@ export default class LastPrMultiRepos extends Component {
     render() {
         const { repository, title, apiData, apiError } = this.props;
 
-        console.log(apiData);
-
         let body = <WidgetLoader/>;
         let count = 0;
         if (apiData) {
+            console.log(apiData);
             // body = (
             //     <div>
             //         {this.repositories.map(PullRequests => {
