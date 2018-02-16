@@ -3,6 +3,3 @@
 *.log*
 /.nyc_output
 /coverage
-/lib
-/es
-/node_modules
