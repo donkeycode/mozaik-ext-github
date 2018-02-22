@@ -40,11 +40,10 @@ var LastPrMultiRepos = function (_Component) {
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
         if (apiData) {
-            var lastPullRequests = [];
-            apiData.array.forEach(function (repo) {
-                if (repo.pullRequests) {
-                    lastPullRequests.push(repo.pullRequests[0]);
-                }
+            var lastPullRequests = apiData.filter(function (repo) {
+                return repo.pullRequests.length;
+            }).map(function (repo) {
+                return repo.pullRequests[0];
             });
             console.log(lastPullRequests);
             count = lastPullRequests.length;
