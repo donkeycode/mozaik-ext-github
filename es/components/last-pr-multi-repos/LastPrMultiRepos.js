@@ -38,17 +38,16 @@ var LastPrMultiRepos = function (_Component) {
 
 
         var body = React.createElement(WidgetLoader, null);
-        var lastPullRequests = apiData.map(function (pullRequests) {
-            pullRequests[0];
-        });
+        console.log(apiData);
+        // let lastPullRequests = apiData.map(pullRequests => {
+        //     pullRequests[0];
+        // })
         console.log('last pull requests', lastPullRequests);
         if (lastPullRequests) {
             body = React.createElement(
                 'div',
                 null,
-                lastPullRequests.map(function (pullRequest) {
-                    React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
-                })
+                'test'
             );
         }
 
