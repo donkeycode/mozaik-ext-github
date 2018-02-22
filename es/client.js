@@ -100,7 +100,7 @@ var client = function client(mozaik) {
             var repos = [];
             var promises = [];
             repositories.map(function (repository) {
-                promise.push(buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref9) {
+                promises.push(buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref9) {
                     var pullRequests = _ref9.body;
                     return repos.push({ pullRequests: pullRequests });
                 }));
