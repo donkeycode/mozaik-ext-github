@@ -98,14 +98,17 @@ var client = function client(mozaik) {
             //     return this.apiCalls.pullRequests({ repository });
             // });
             var repos = [];
+            var promises = [];
             repositories.map(function (repository) {
-
-                buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref9) {
+                promise.push(buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref9) {
                     var pullRequests = _ref9.body;
                     return repos.push({ pullRequests: pullRequests });
-                });
+                }));
             });
-            return repos;
+
+            Promise.all(promises).then(function (results) {
+                return repos;
+            });
         },
         repositoryParticipationStats: function repositoryParticipationStats(_ref10) {
             var repository = _ref10.repository;
