@@ -40,7 +40,7 @@ var LastPrMultiRepos = function (_Component) {
         var count = 0;
         if (apiError) {
             console.log('Error');
-            consoole.log(apiError);
+            console.log(apiError);
         }
         if (apiData) {
             console.log('data');
