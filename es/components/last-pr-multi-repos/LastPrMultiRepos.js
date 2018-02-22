@@ -24,7 +24,7 @@ var LastPrMultiRepos = function (_Component) {
             owner = _ref.owner;
 
         return {
-            id: 'github.pullRequestsMultiCompte.' + repositories + '.' + owner,
+            id: 'github.pullRequestsMultiRepo.' + repositories + '.' + owner,
             params: { repositories: repositories, owner: owner }
         };
     };
@@ -40,22 +40,17 @@ var LastPrMultiRepos = function (_Component) {
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
         if (apiData) {
-            console.log(apiData);
-
             var lastPullRequests = apiData.map(function (repo) {
                 return repo.pullRequests[0];
             });
-            console.log('last pull requests', lastPullRequests);
-            if (lastPullRequests) {
-                count = lastPullRequests.length;
-                body = React.createElement(
-                    'div',
-                    null,
-                    lastPullRequests.map(function (pullRequest) {
-                        return React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
-                    })
-                );
-            }
+            count = lastPullRequests.length;
+            body = React.createElement(
+                'div',
+                null,
+                lastPullRequests.map(function (pullRequest) {
+                    return React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
+                })
+            );
         }
 
         return React.createElement(
