@@ -37,7 +37,12 @@ var LastPrMultiRepos = function (_Component) {
 
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
+        if (apiError) {
+            console.log('Error');
+            consoole.log(apiError);
+        }
         if (apiData) {
+            console.log('data');
             console.log(apiData);
             // body = (
             //     <div>
