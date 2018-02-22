@@ -48,7 +48,20 @@ var LastPrMultiRepos = function (_Component) {
                 'div',
                 null,
                 lastPullRequests.map(function (pullRequest) {
-                    return React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
+                    return React.createElement(
+                        'div',
+                        null,
+                        React.createElement(WidgetLabel, {
+                            label: React.createElement(
+                                'a',
+                                { href: '' + pullRequest.base.repo.html_url, target: '_blank' },
+                                pullRequest.base.repo.name
+                            ),
+                            prefix: pullRequest.state,
+                            style: { width: '48%', marginBottom: '1vmin' }
+                        }),
+                        React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest })
+                    );
                 })
             );
         }
