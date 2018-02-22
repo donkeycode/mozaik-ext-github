@@ -28,7 +28,7 @@ var PullRequest = function (_Component) {
 
 
         console.log('Trying to render pull request');
-        console.log(pullRequest);
+        console.log('pr', pullRequest);
         return React.createElement(WidgetListItem, {
             title: React.createElement(
                 'span',
