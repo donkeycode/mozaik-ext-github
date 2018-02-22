@@ -50,8 +50,7 @@ var LastPrMultiRepos = function (_Component) {
                     null,
                     lastPullRequests.map(function (pullRequest) {
                         React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
-                    }),
-                    'test'
+                    })
                 );
             }
         }
