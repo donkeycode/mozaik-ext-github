@@ -19,10 +19,11 @@ var LastPrMultiRepos = function (_Component) {
     }
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
-        var repositories = _ref.repositories;
+        var repositories = _ref.repositories,
+            owner = _ref.owner;
 
         return {
-            id: 'github.pullRequestsMultiCompte.' + repositories,
+            id: 'github.pullRequestsMultiCompte.' + repositories + '.' + owner,
             params: { repositories: repositories, owner: owner }
         };
     };
