@@ -49,7 +49,7 @@ var LastPrMultiRepos = function (_Component) {
                 'div',
                 null,
                 lastPullRequests.map(function (pullRequest) {
-                    return React.createElement(
+                    pullRequest && React.createElement(
                         'div',
                         null,
                         React.createElement(WidgetLabel, {
