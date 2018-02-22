@@ -43,6 +43,7 @@ var LastPrMultiRepos = function (_Component) {
             var lastPullRequests = apiData.map(function (repo) {
                 return repo.pullRequests[0];
             });
+            console.log(lastPullRequests);
             count = lastPullRequests.length;
             body = React.createElement(
                 'div',
@@ -57,8 +58,7 @@ var LastPrMultiRepos = function (_Component) {
                                 { href: '' + pullRequest.base.repo.html_url, target: '_blank' },
                                 pullRequest.base.repo.name
                             ),
-                            prefix: pullRequest.state,
-                            style: { width: '48%', marginBottom: '1vmin' }
+                            style: { width: '100%', marginBottom: '1vmin' }
                         }),
                         React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest })
                     );
