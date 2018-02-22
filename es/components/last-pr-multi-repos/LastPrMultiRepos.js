@@ -23,7 +23,7 @@ var LastPrMultiRepos = function (_Component) {
 
         return {
             id: 'github.pullRequestsMultiCompte.' + repositories,
-            params: { repositories: repositories }
+            params: { repositories: repositories, owner: owner }
         };
     };
 
@@ -82,6 +82,7 @@ var LastPrMultiRepos = function (_Component) {
 
 LastPrMultiRepos.PropTypes = {
     repositories: PropTypes.arrayOf(PropTypes.string).isRequired,
+    owner: PropTypes.string.isRequired,
     title: PropTypes.string,
     apiData: PropTypes.shape({
         LastPrMultiRepos: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired
