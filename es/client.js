@@ -97,44 +97,45 @@ var client = function client(mozaik) {
             // repositories.forEach(({ repository }) => {
             //     return this.apiCalls.pullRequests({ repository });
             // });
-            var repos = [];
-            var promises = [];
-            repositories.map(function (repository) {
-                return apiCalls.branch(Object.assign({ branch: branch.name }, params));
+            // var repos = [];
+            // const promises = [];
+            // repositories.map(repository => {
+            //     return apiCalls.branch(Object.assign({ branch: branch.name }, params))
 
-                promises.push(buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref9) {
-                    var pullRequests = _ref9.body;
-                    return repos.push({ pullRequests: pullRequests });
+            //     promises.push(buildApiRequest(`/repos/${repository}/pulls`)
+            //     .then(({ body: pullRequests }) => (repos.push({ pullRequests, }))))
+            // })
+
+            // return Promise.all(promises)
+            // .then((results) => {
+            //     return repos;
+            // })
+
+            return Promise.all(repositories.map(function (repository) {
+                return apiCalls.pullRequests(Object.assign({ repository: repository }));
+            }));
+
+            return buildApiRequest('/repos/' + params.repository + '/branches').then(function (res) {
+                return Promise.all(res.body.map(function (branch) {
+                    return apiCalls.branch(Object.assign({ branch: branch.name }, params));
                 }));
+            }).then(function (branches) {
+                return { branches: branches };
             });
-
-            return Promise.all(promises).then(function (results) {
-                return repos;
-            });
-
-            // return buildApiRequest(`/repos/${params.repository}/branches`)
-            //     .then(res => {
-            //         return Promise.all(
-            //             res.body.map(branch => {
-            //                 return apiCalls.branch(Object.assign({ branch: branch.name }, params))
-            //             })
-            //         )
-            //     })
-            //     .then(branches => ({ branches }))
         },
-        repositoryParticipationStats: function repositoryParticipationStats(_ref10) {
-            var repository = _ref10.repository;
+        repositoryParticipationStats: function repositoryParticipationStats(_ref9) {
+            var repository = _ref9.repository;
 
-            return buildApiRequest('/repos/' + repository + '/stats/participation').then(function (_ref11) {
-                var body = _ref11.body;
+            return buildApiRequest('/repos/' + repository + '/stats/participation').then(function (_ref10) {
+                var body = _ref10.body;
                 return body;
             });
         },
-        repositoryLanguages: function repositoryLanguages(_ref12) {
-            var repository = _ref12.repository;
+        repositoryLanguages: function repositoryLanguages(_ref11) {
+            var repository = _ref11.repository;
 
-            return buildApiRequest('/repos/' + repository + '/languages').then(function (_ref13) {
-                var body = _ref13.body;
+            return buildApiRequest('/repos/' + repository + '/languages').then(function (_ref12) {
+                var body = _ref12.body;
                 return body;
             });
         },
@@ -151,27 +152,17 @@ var client = function client(mozaik) {
                 return { branches: branches };
             });
         },
-        branch: function (_branch) {
-            function branch(_x) {
-                return _branch.apply(this, arguments);
-            }
+        branch: function branch(_ref13) {
+            var repository = _ref13.repository,
+                _branch = _ref13.branch;
 
-            branch.toString = function () {
-                return _branch.toString();
-            };
-
-            return branch;
-        }(function (_ref14) {
-            var repository = _ref14.repository,
-                branch = _ref14.branch;
-
-            return buildApiRequest('/repos/' + repository + '/branches/' + branch).then(function (_ref15) {
-                var body = _ref15.body;
+            return buildApiRequest('/repos/' + repository + '/branches/' + _branch).then(function (_ref14) {
+                var body = _ref14.body;
                 return body;
             });
-        }),
-        repositoryContributorsStats: function repositoryContributorsStats(_ref16) {
-            var repository = _ref16.repository;
+        },
+        repositoryContributorsStats: function repositoryContributorsStats(_ref15) {
+            var repository = _ref15.repository;
 
             return buildApiRequest('/repos/' + repository + '/stats/contributors').then(function (res) {
                 return {
@@ -179,8 +170,8 @@ var client = function client(mozaik) {
                 };
             });
         },
-        repoCommitActivity: function repoCommitActivity(_ref17) {
-            var repository = _ref17.repository;
+        repoCommitActivity: function repoCommitActivity(_ref16) {
+            var repository = _ref16.repository;
 
             return buildApiRequest('/repos/' + repository + '/stats/commit_activity').then(function (res) {
                 return {
@@ -195,11 +186,11 @@ var client = function client(mozaik) {
                 max: 1000
             });
         },
-        issues: function issues(_ref18) {
-            var repository = _ref18.repository;
+        issues: function issues(_ref17) {
+            var repository = _ref17.repository;
 
-            return buildApiRequest('/repos/' + repository + '/issues').then(function (_ref19) {
-                var body = _ref19.body;
+            return buildApiRequest('/repos/' + repository + '/issues').then(function (_ref18) {
+                var body = _ref18.body;
                 return body;
             });
         },
@@ -234,19 +225,19 @@ var client = function client(mozaik) {
                 return res.body;
             });
         },
-        trafficViews: function trafficViews(_ref20) {
-            var repository = _ref20.repository;
+        trafficViews: function trafficViews(_ref19) {
+            var repository = _ref19.repository;
 
-            return buildApiRequest('/repos/' + repository + '/traffic/views').then(function (_ref21) {
-                var body = _ref21.body;
+            return buildApiRequest('/repos/' + repository + '/traffic/views').then(function (_ref20) {
+                var body = _ref20.body;
                 return body;
             });
         },
-        trafficClones: function trafficClones(_ref22) {
-            var repository = _ref22.repository;
+        trafficClones: function trafficClones(_ref21) {
+            var repository = _ref21.repository;
 
-            return buildApiRequest('/repos/' + repository + '/traffic/clones').then(function (_ref23) {
-                var body = _ref23.body;
+            return buildApiRequest('/repos/' + repository + '/traffic/clones').then(function (_ref22) {
+                var body = _ref22.body;
                 return body;
             });
         }
