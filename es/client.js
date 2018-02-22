@@ -96,36 +96,9 @@ var client = function client(mozaik) {
             var repositories = _ref8.repositories,
                 owner = _ref8.owner;
 
-            // repositories.forEach(({ repository }) => {
-            //     return this.apiCalls.pullRequests({ repository });
-            // });
-            // var repos = [];
-            // const promises = [];
-            // repositories.map(repository => {
-            //     return apiCalls.branch(Object.assign({ branch: branch.name }, params))
-
-            //     promises.push(buildApiRequest(`/repos/${repository}/pulls`)
-            //     .then(({ body: pullRequests }) => (repos.push({ pullRequests, }))))
-            // })
-
-            // return Promise.all(promises)
-            // .then((results) => {
-            //     return repos;
-            // })
-
             return Promise.all(repositories.map(function (repository) {
                 return apiCalls.pullRequests(Object.assign({ repository: owner + '/' + repository }));
             }));
-
-            // return buildApiRequest(`/repos/${params.repository}/branches`)
-            //     .then(res => {
-            //         return Promise.all(
-            //             res.body.map(branch => {
-            //                 return apiCalls.branch(Object.assign({ branch: branch.name }, params))
-            //             })
-            //         )
-            //     })
-            //     .then(branches => ({ branches }))
         },
         repositoryParticipationStats: function repositoryParticipationStats(_ref9) {
             var repository = _ref9.repository;
