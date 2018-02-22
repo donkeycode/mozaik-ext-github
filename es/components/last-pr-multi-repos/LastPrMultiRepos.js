@@ -38,20 +38,22 @@ var LastPrMultiRepos = function (_Component) {
 
 
         var body = React.createElement(WidgetLoader, null);
-        console.log(apiData);
-        var lastPullRequests = apiData.map(function (repo) {
-            return repo.pullRequests[0];
-        });
-        console.log('last pull requests', lastPullRequests);
-        if (lastPullRequests) {
-            body = React.createElement(
-                'div',
-                null,
-                lastPullRequests.map(function (pullRequest) {
-                    React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
-                }),
-                'test'
-            );
+        if (apiData) {
+            console.log(apiData);
+            var lastPullRequests = apiData.map(function (repo) {
+                return repo.pullRequests[0];
+            });
+            console.log('last pull requests', lastPullRequests);
+            if (lastPullRequests) {
+                body = React.createElement(
+                    'div',
+                    null,
+                    lastPullRequests.map(function (pullRequest) {
+                        React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
+                    }),
+                    'test'
+                );
+            }
         }
 
         return React.createElement(
