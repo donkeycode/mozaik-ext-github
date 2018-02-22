@@ -84,7 +84,7 @@ var client = function client(mozaik) {
         pullRequests: function pullRequests(_ref6) {
             var repository = _ref6.repository;
 
-            console.log(repostitory);
+            console.log(repository);
             return buildApiRequest('/repos/' + repository + '/pulls').then(function (_ref7) {
                 var pullRequests = _ref7.body;
                 return {
