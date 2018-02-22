@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
 import GithubIcon from 'react-icons/lib/fa/github-alt';
+import PullRequest from '../pull-requests/PullRequest';
 
 var LastPrMultiRepos = function (_Component) {
     _inherits(LastPrMultiRepos, _Component);
@@ -37,20 +38,19 @@ var LastPrMultiRepos = function (_Component) {
 
 
         var body = React.createElement(WidgetLoader, null);
-        if (apiData) {
-            console.log('data');
-            console.log(apiData);
-            // body = (
-            //     <div>
-            //         {this.repositories.map(PullRequests => {
-
-            //         })}
-            //     </div>
-            // )
+        console.log(apiData);
+        var lastPullRequests = apiData.map(function (repo) {
+            return repo.pullRequests[0];
+        });
+        console.log('last pull requests', lastPullRequests);
+        if (lastPullRequests) {
             body = React.createElement(
                 'div',
                 null,
-                'Test last pull requests'
+                lastPullRequests.map(function (pullRequest) {
+                    React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
+                }),
+                'test'
             );
         }
 
