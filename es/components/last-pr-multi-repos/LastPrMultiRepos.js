@@ -38,6 +38,7 @@ var LastPrMultiRepos = function (_Component) {
 
 
         var body = React.createElement(WidgetLoader, null);
+        var count = 0;
         if (apiData) {
             console.log(apiData);
 
@@ -46,12 +47,12 @@ var LastPrMultiRepos = function (_Component) {
             });
             console.log('last pull requests', lastPullRequests);
             if (lastPullRequests) {
+                count = lastPullRequests.length;
                 body = React.createElement(
                     'div',
                     null,
                     lastPullRequests.map(function (pullRequest) {
-                        console.log(pullRequest);
-                        React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
+                        return React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest });
                     })
                 );
             }
@@ -62,7 +63,8 @@ var LastPrMultiRepos = function (_Component) {
             null,
             React.createElement(WidgetHeader, {
                 title: title || 'Last Pull Requests',
-                icon: GithubIcon
+                icon: GithubIcon,
+                count: count
             }),
             React.createElement(
                 WidgetBody,
