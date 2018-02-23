@@ -132,7 +132,10 @@ var PullRequestDC = function (_Component) {
             }),
             React.createElement(
                 'div',
-                null,
+                {
+                    style: {
+                        display: 'flex'
+                    } },
                 labelsBody,
                 reviewersBody
             )
