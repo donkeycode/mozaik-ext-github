@@ -55,7 +55,7 @@ var LastPrMultiRepos = function (_Component) {
                 }
             }
             lastPullRequests.sort(function (a, b) {
-                return new Date(a.updated_at) - new Date(b.updated_at);
+                return new Date(b.updated_at) - new Date(a.updated_at);
             });
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
