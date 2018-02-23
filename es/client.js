@@ -95,11 +95,8 @@ var client = function client(mozaik) {
             var repositories = _ref8.repositories,
                 owner = _ref8.owner;
 
-            console.log('1');
             return buildApiRequest('/orgs/' + owner + '/repos').then(function (res) {
-                console.log('2', res);
                 return Promise.all(res.body.map(function (repo) {
-                    console.log('3', repo);
                     return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }));
                 }));
             });
