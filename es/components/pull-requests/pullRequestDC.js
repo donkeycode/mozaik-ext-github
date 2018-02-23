@@ -41,16 +41,17 @@ var PullRequestDC = function (_Component) {
                 requested_reviewers.map(function (reviewer) {
                     return React.createElement(
                         'div',
-                        {
-                            style: {
-                                border: '3px solid rgb(132, 16, 16)',
-                                display: 'inline-block',
-                                borderRadius: '30px',
-                                boxShadow: '0px 0px 1px 2px #f5ecec'
-                            } },
+                        null,
                         React.createElement(
                             'a',
-                            { href: reviewer.html_url, target: '_blank' },
+                            {
+                                style: {
+                                    border: '3px solid rgb(132, 16, 16)',
+                                    display: 'inline-block',
+                                    borderRadius: '30px',
+                                    boxShadow: '0px 0px 1px 2px #f5ecec'
+                                },
+                                href: reviewer.html_url, target: '_blank' },
                             React.createElement(
                                 WidgetAvatar,
                                 { href: reviewer.html_url, size: '3vmin' },
