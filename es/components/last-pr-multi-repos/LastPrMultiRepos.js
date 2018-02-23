@@ -29,36 +29,47 @@ var LastPrMultiRepos = function (_Component) {
         };
     };
 
+    LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
+        var _this2 = this;
+
+        setInterval(function () {
+            var nextPage = _this2.props.currentPage < _this2.props.nbPages - 1 ? _this2.props.currentPage + 1 : 0;
+            _this2.setState({ currentPage: nextPage });
+        }, 5000);
+    };
+
     LastPrMultiRepos.prototype.render = function render() {
         var _props = this.props,
             repository = _props.repository,
             title = _props.title,
             apiData = _props.apiData,
-            apiError = _props.apiError;
+            apiError = _props.apiError,
+            elemOnPage = _props.elemOnPage,
+            currentPage = _props.currentPage;
 
 
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
+        var page = 0;
         if (apiData) {
             console.log('apiData', apiData.length, apiData);
             var lastPullRequests = [];
 
             for (var i = 0; i < apiData.length; i++) {
-                console.log('apiData', apiData[i]);
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                    console.log('pull request', apiData[i].pullRequests[j]);
-                    lastPullRequests.push(apiData[i].pullRequests[j]);
+                    if (elemOnPage && lastPullRequests.length > elemOnPage) {
+                        page++;
+                    }
+                    lastPullRequests[page].push(apiData[i].pullRequests[j]);
                 }
             }
-            lastPullRequests.sort(function (a, b) {
-                return new Date(b.updated_at) - new Date(a.updated_at);
-            });
+            // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
             body = React.createElement(
                 'div',
                 null,
-                lastPullRequests.map(function (pullRequest) {
+                lastPullRequests[currentPage].map(function (pullRequests) {
                     return React.createElement(
                         'div',
                         null,
@@ -103,9 +114,14 @@ LastPrMultiRepos.PropTypes = {
     repositories: PropTypes.arrayOf(PropTypes.string).isRequired,
     owner: PropTypes.string.isRequired,
     title: PropTypes.string,
+    elemOnPage: PropTypes.number,
     apiData: PropTypes.shape({
         LastPrMultiRepos: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired
     }),
     apiError: PropTypes.object
+};
+LastPrMultiRepos.defaultProps = {
+    currentPage: 0,
+    nbPages: 1
 };
 export default LastPrMultiRepos;
