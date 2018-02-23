@@ -51,6 +51,8 @@ var PullRequestDC = function (_Component) {
                     );
                 })
             );
+        } else {
+            reviewers = 'No reviewers requested';
         }
 
         return React.createElement(
