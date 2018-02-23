@@ -70,7 +70,7 @@ var PullRequestDC = function (_Component) {
                         'div',
                         {
                             style: {
-                                background: label.color,
+                                background: '#' + label.color,
                                 padding: '1vmin'
                             } },
                         React.createElement(
