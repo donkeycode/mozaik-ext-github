@@ -71,7 +71,7 @@ var LastPrMultiRepos = function (_Component) {
             this.props.nbPages = lastPullRequests.length;
             // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
-            count = this.props.currentPage + ' / ' + lastPullRequests.length;
+            count = this.props.currentPage + ' / ' + this.props.nbPages;
             body = React.createElement(
                 'div',
                 null,
