@@ -25,13 +25,14 @@ var PullRequestDC = function (_Component) {
             html_url = pullRequest.html_url,
             updated_at = pullRequest.updated_at,
             user = pullRequest.user,
-            requested_reviewers = pullRequest.requested_reviewers;
+            requested_reviewers = pullRequest.requested_reviewers,
+            labels = pullRequest.labels;
 
 
-        var reviewers = null;
-        console.log(requested_reviewers);
+        var reviewersBody = null;
+        var labelsBody = null;
         if (requested_reviewers.length) {
-            reviewers = React.createElement(
+            reviewersBody = React.createElement(
                 'div',
                 null,
                 requested_reviewers.map(function (reviewer) {
@@ -54,6 +55,28 @@ var PullRequestDC = function (_Component) {
                                 { href: reviewer.html_url, size: '3vmin' },
                                 React.createElement('img', { src: reviewer.avatar_url, alt: reviewer.login })
                             )
+                        )
+                    );
+                })
+            );
+        }
+
+        if (labels.length) {
+            labelsBody = React.createElement(
+                'div',
+                null,
+                labels.map(function (label) {
+                    return React.createElement(
+                        'div',
+                        {
+                            style: {
+                                background: label.color,
+                                padding: '1vmin'
+                            } },
+                        React.createElement(
+                            'span',
+                            null,
+                            label.name
                         )
                     );
                 })
@@ -105,7 +128,8 @@ var PullRequestDC = function (_Component) {
             React.createElement(
                 'div',
                 null,
-                reviewers
+                labelsBody,
+                reviewersBody
             )
         );
     };
