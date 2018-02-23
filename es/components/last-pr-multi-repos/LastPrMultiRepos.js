@@ -41,10 +41,19 @@ var LastPrMultiRepos = function (_Component) {
         var count = 0;
         if (apiData) {
             console.log('apiData', apiData);
-            var lastPullRequests = apiData.filter(function (repo) {
-                return repo.pullRequests.length;
-            }).sort(function (a, b) {
-                return new Date(a.updated_at) < new Date(b.updated_at);
+            var lastPullRequests = [];
+
+            // .filter(repo => repo.pullRequests.length)
+            // .sort((a, b) => new Date(a.updated_at) < new Date(b.updated_at))
+            // .map(repo => repo.pullRequests[0])
+
+            for (var i = 0; i < apiData.lenght; i++) {
+                for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                    lastPullRequests.push(apiData.pullRequests[j]);
+                }
+            }
+            lastPullRequests.sort(function (a, b) {
+                return new Date(a.update_at) < new Date(b.update_at);
             });
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
