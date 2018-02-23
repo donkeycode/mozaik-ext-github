@@ -57,11 +57,13 @@ var LastPrMultiRepos = function (_Component) {
 
             for (var i = 0; i < apiData.length; i++) {
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                    var pr = [];
                     if (elemOnPage && lastPullRequests.length > elemOnPage) {
                         page++;
                     }
-                    lastPullRequests[page].push(apiData[i].pullRequests[j]);
+                    pr.push(apiData[i].pullRequests[j]);
                 }
+                lastPullRequests[page].push(pr);
             }
             // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
