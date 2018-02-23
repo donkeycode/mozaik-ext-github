@@ -49,12 +49,10 @@ var LastPrMultiRepos = function (_Component) {
 
             for (var i = 0; i < apiData.lenght; i++) {
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                    lastPullRequests.push(apiData.pullRequests[j]);
+                    lastPullRequests.push(apiData[i].pullRequests[j]);
                 }
             }
-            lastPullRequests.sort(function (a, b) {
-                return new Date(a.update_at) < new Date(b.update_at);
-            });
+            // lastPullRequests.sort((a, b) => new Date(a.update_at) < new Date(b.update_at));
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
             body = React.createElement(
