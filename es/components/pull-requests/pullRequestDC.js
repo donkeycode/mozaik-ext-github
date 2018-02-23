@@ -39,7 +39,7 @@ var PullRequestDC = function (_Component) {
                         'div',
                         {
                             style: {
-                                backgroundColor: 'ff0000',
+                                background: 'ff0000',
                                 display: 'inline-block',
                                 margin: '2vmin',
                                 padding: '1vmin'
@@ -47,18 +47,23 @@ var PullRequestDC = function (_Component) {
                         React.createElement(
                             'a',
                             { href: reviewer.html_url, target: '_blank' },
-                            React.createElement('img', { src: reviewer.avatar_url, alt: reviewer.login })
+                            React.createElement(
+                                WidgetAvatar,
+                                { href: reviewer.html_url, size: '3vmin' },
+                                React.createElement('img', { src: reviewer.avatar_url, alt: reviewer.login })
+                            )
                         )
                     );
                 })
             );
-        } else {
-            reviewers = 'No reviewers requested';
         }
 
         return React.createElement(
             'div',
-            null,
+            {
+                style: {
+                    display: 'flex'
+                } },
             React.createElement(WidgetListItem, {
                 title: React.createElement(
                     'span',
