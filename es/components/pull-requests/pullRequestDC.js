@@ -42,10 +42,11 @@ var PullRequestDC = function (_Component) {
                             'a',
                             {
                                 style: {
-                                    border: '1px solid #ff0000',
+                                    border: '3px solid rgb(132, 16, 16)',
                                     display: 'inline-block',
                                     margin: '2vmin',
-                                    padding: '1vmin'
+                                    borderRadius: '30px',
+                                    boxShadow: '0px 0px 1px 2px #f5ecec'
                                 },
                                 href: reviewer.html_url, target: '_blank' },
                             React.createElement(
@@ -101,7 +102,11 @@ var PullRequestDC = function (_Component) {
                     moment(updated_at).fromNow()
                 )
             }),
-            reviewers
+            React.createElement(
+                'div',
+                null,
+                reviewers
+            )
         );
     };
 
