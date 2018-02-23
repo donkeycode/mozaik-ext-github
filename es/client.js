@@ -100,7 +100,7 @@ var client = function client(mozaik) {
                 console.log('2');
                 return Promise.all(res.body.map(function (repo) {
                     console.log('3');
-                    return apiCalls.pullRequests(Object.assign({ respository: repo.full_name }));
+                    return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }));
                 }));
             });
         },
