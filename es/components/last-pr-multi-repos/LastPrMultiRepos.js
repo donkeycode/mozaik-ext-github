@@ -48,7 +48,9 @@ var LastPrMultiRepos = function (_Component) {
             // .map(repo => repo.pullRequests[0])
 
             for (var i = 0; i < apiData.lenght; i++) {
+                console.log(apiData[i]);
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                    console.log(apiData[i].pullRequests[j]);
                     lastPullRequests.push(apiData[i].pullRequests[j]);
                 }
             }
