@@ -45,8 +45,6 @@ var LastPrMultiRepos = function (_Component) {
                 return repo.pullRequests.length;
             }).sort(function (a, b) {
                 return new Date(a.updated_at) < new Date(b.updated_at);
-            }).map(function (repo) {
-                return repo.pullRequests[0];
             });
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
