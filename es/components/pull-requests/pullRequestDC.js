@@ -64,14 +64,19 @@ var PullRequestDC = function (_Component) {
         if (labels.length) {
             labelsBody = React.createElement(
                 'div',
-                null,
+                {
+                    style: {
+                        display: flex,
+                        alignItems: center
+                    } },
                 labels.map(function (label) {
                     return React.createElement(
                         'div',
                         {
                             style: {
                                 background: '#' + label.color,
-                                padding: '1vmin'
+                                textAlign: 'center',
+                                padding: '0 1vmin'
                             } },
                         React.createElement(
                             'span',
