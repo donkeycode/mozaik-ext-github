@@ -40,12 +40,13 @@ var LastPrMultiRepos = function (_Component) {
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
         if (apiData) {
+            console.log('apiData', apiData);
             var lastPullRequests = apiData.filter(function (repo) {
                 return repo.pullRequests.length;
             }).map(function (repo) {
                 return repo.pullRequests[0];
             });
-            console.log(lastPullRequests);
+            console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
             body = React.createElement(
                 'div',
