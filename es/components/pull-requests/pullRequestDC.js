@@ -23,46 +23,77 @@ var PullRequestDC = function (_Component) {
         var pullRequest = this.props.pullRequest;
         var title = pullRequest.title,
             html_url = pullRequest.html_url,
-            created_at = pullRequest.created_at,
-            user = pullRequest.user;
+            updated_at = pullRequest.updated_at,
+            user = pullRequest.user,
+            requested_reviewers = pullRequest.requested_reviewers;
 
 
-        return React.createElement(WidgetListItem, {
-            title: React.createElement(
-                'span',
+        var reviewers = null;
+        if (reviewers) {
+            reviewers = React.createElement(
+                'div',
                 null,
-                React.createElement(
-                    'a',
-                    { href: html_url, target: '_blank' },
-                    title
+                requested_reviewers.map(function (reviewer) {
+                    return React.createElement(
+                        'div',
+                        {
+                            style: {
+                                backgroundColor: 'ff0000',
+                                display: inline - block,
+                                margin: '2vmin',
+                                padding: '1vmin'
+                            } },
+                        React.createElement(
+                            'a',
+                            { href: reviewer.html_url, target: '_blank' },
+                            React.createElement('img', { src: reviewer.avatar_url, alt: reviewer.login })
+                        )
+                    );
+                })
+            );
+        }
+
+        return React.createElement(
+            'div',
+            null,
+            React.createElement(WidgetListItem, {
+                title: React.createElement(
+                    'span',
+                    null,
+                    React.createElement(
+                        'a',
+                        { href: html_url, target: '_blank' },
+                        title
+                    ),
+                    ' ',
+                    'by',
+                    ' ',
+                    React.createElement(
+                        'a',
+                        { href: user.html_url, target: '_blank' },
+                        user.login
+                    )
                 ),
-                ' ',
-                'by',
-                ' ',
-                React.createElement(
-                    'a',
-                    { href: user.html_url, target: '_blank' },
-                    user.login
+                pre: React.createElement(
+                    WidgetAvatar,
+                    { href: user.html_url, size: '4vmin' },
+                    React.createElement('img', { src: user.avatar_url, alt: user.login })
+                ),
+                meta: React.createElement(
+                    'span',
+                    {
+                        style: {
+                            display: 'flex',
+                            alignItems: 'center'
+                        }
+                    },
+                    React.createElement(ClockIcon, null),
+                    '\xA0',
+                    moment(updated_at).fromNow()
                 )
-            ),
-            pre: React.createElement(
-                WidgetAvatar,
-                { href: user.html_url, size: '4vmin' },
-                React.createElement('img', { src: user.avatar_url, alt: user.login })
-            ),
-            meta: React.createElement(
-                'span',
-                {
-                    style: {
-                        display: 'flex',
-                        alignItems: 'center'
-                    }
-                },
-                React.createElement(ClockIcon, null),
-                '\xA0',
-                moment(updated_at).fromNow()
-            )
-        });
+            }),
+            reviewers
+        );
     };
 
     return PullRequestDC;

@@ -43,10 +43,6 @@ var LastPrMultiRepos = function (_Component) {
             console.log('apiData', apiData.length, apiData);
             var lastPullRequests = [];
 
-            // .filter(repo => repo.pullRequests.length)
-            // .sort((a, b) => new Date(a.updated_at) < new Date(b.updated_at))
-            // .map(repo => repo.pullRequests[0])
-
             for (var i = 0; i < apiData.length; i++) {
                 console.log('apiData', apiData[i]);
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
