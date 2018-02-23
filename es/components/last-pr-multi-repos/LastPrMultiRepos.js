@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { WidgetLabel, TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
 import GithubIcon from 'react-icons/lib/fa/github-alt';
-import PullRequest from '../pull-requests/PullRequest';
+import PullRequestDC from '../pull-requests/PullRequestDC';
 
 var LastPrMultiRepos = function (_Component) {
     _inherits(LastPrMultiRepos, _Component);
@@ -74,7 +74,7 @@ var LastPrMultiRepos = function (_Component) {
                             ),
                             style: { width: '100%', marginBottom: '1vmin' }
                         }),
-                        React.createElement(PullRequest, { key: pullRequest.id, pullRequest: pullRequest })
+                        React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
                     );
                 })
             );
