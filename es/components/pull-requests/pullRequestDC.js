@@ -41,7 +41,9 @@ var PullRequestDC = function (_Component) {
                 requested_reviewers.map(function (reviewer) {
                     return React.createElement(
                         'div',
-                        null,
+                        { style: {
+                                margin: '0 1vmin'
+                            } },
                         React.createElement(
                             'a',
                             {
@@ -136,7 +138,8 @@ var PullRequestDC = function (_Component) {
                 'div',
                 {
                     style: {
-                        display: 'flex'
+                        display: 'flex',
+                        alignItems: 'center'
                     } },
                 labelsBody,
                 reviewersBody
