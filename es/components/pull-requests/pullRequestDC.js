@@ -29,7 +29,7 @@ var PullRequestDC = function (_Component) {
 
 
         var reviewers = null;
-        if (reviewers) {
+        if (requested_reviewers) {
             reviewers = React.createElement(
                 'div',
                 null,
