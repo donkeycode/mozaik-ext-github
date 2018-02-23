@@ -71,7 +71,8 @@ var PullRequestDC = function (_Component) {
                 {
                     style: {
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        margin: '0 1vmin'
                     } },
                 labels.map(function (label) {
                     return React.createElement(
