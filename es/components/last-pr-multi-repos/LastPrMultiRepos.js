@@ -55,16 +55,19 @@ var LastPrMultiRepos = function (_Component) {
             console.log('apiData', apiData.length, apiData);
             var lastPullRequests = [];
 
+            var pr = [];
             for (var i = 0; i < apiData.length; i++) {
                 for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                    var pr = [];
-                    if (elemOnPage && lastPullRequests.length > elemOnPage) {
-                        page++;
-                    }
                     pr.push(apiData[i].pullRequests[j]);
+                    if (elemOnPage) {
+                        if (pr.length === elemOnPage) {
+                            lastPullRequests.push(pr);
+                            pr = [];
+                        }
+                    }
                 }
-                lastPullRequests[page].push(pr);
             }
+            lastPullRequests.push(pr);
             // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
             count = lastPullRequests.length;
