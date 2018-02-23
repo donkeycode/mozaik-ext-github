@@ -39,7 +39,7 @@ var PullRequestDC = function (_Component) {
                         'div',
                         {
                             style: {
-                                background: 'ff0000',
+                                background: '#ff0000',
                                 display: 'inline-block',
                                 margin: '2vmin',
                                 padding: '1vmin'
