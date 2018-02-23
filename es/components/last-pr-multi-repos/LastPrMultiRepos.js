@@ -74,7 +74,7 @@ var LastPrMultiRepos = function (_Component) {
             body = React.createElement(
                 'div',
                 null,
-                lastPullRequests[currentPage].map(function (pullRequest) {
+                lastPullRequests[this.props.currentPage].map(function (pullRequest) {
                     return React.createElement(
                         'div',
                         null,
