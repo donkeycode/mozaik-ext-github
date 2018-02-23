@@ -66,8 +66,8 @@ var PullRequestDC = function (_Component) {
                 'div',
                 {
                     style: {
-                        display: flex,
-                        alignItems: center
+                        display: 'flex',
+                        alignItems: 'center'
                     } },
                 labels.map(function (label) {
                     return React.createElement(
