@@ -37,16 +37,17 @@ var PullRequestDC = function (_Component) {
                 requested_reviewers.map(function (reviewer) {
                     return React.createElement(
                         'div',
-                        {
-                            style: {
-                                background: '#ff0000',
-                                display: 'inline-block',
-                                margin: '2vmin',
-                                padding: '1vmin'
-                            } },
+                        null,
                         React.createElement(
                             'a',
-                            { href: reviewer.html_url, target: '_blank' },
+                            {
+                                style: {
+                                    border: '1px solid #ff0000',
+                                    display: 'inline-block',
+                                    margin: '2vmin',
+                                    padding: '1vmin'
+                                },
+                                href: reviewer.html_url, target: '_blank' },
                             React.createElement(
                                 WidgetAvatar,
                                 { href: reviewer.html_url, size: '3vmin' },
