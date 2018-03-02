@@ -86,7 +86,7 @@ var LastPrMultiRepos = function (_Component) {
 
             var lastPullRequests = this.getLastPullRequests();
 
-            count = this.props.currentPage + ' / ' + lastPullRequests.length - 1;
+            count = this.props.currentPage + ' / ' + (lastPullRequests.length - 1);
             body = React.createElement(
                 'div',
                 null,
