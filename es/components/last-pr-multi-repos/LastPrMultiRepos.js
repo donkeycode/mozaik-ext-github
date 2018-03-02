@@ -60,7 +60,7 @@ var LastPrMultiRepos = function (_Component) {
         setInterval(function () {
             if (_this2.props.apiData) {
                 console.log(_this2.getLastPullRequests().length);
-                _this2.props.currentPage += _this2.props.currentPage === _this2.getLastPullRequests().length - 1 ? 1 : 0;
+                _this2.props.currentPage += _this2.props.currentPage < _this2.getLastPullRequests().length ? 1 : 0;
                 console.log('Current page', _this2.props.currentPage);
                 _this2.setState();
             } else {
