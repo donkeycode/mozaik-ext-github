@@ -16,7 +16,10 @@ var LastPrMultiRepos = function (_Component) {
     function LastPrMultiRepos() {
         _classCallCheck(this, LastPrMultiRepos);
 
-        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, _Component.call(this));
+
+        console.log('Component has been built');
+        return _this;
     }
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
@@ -127,6 +130,10 @@ var LastPrMultiRepos = function (_Component) {
                 )
             )
         );
+    };
+
+    LastPrMultiRepos.prototype.componentWillUnmount = function componentWillUnmount() {
+        console.log('Component destroyed');
     };
 
     return LastPrMultiRepos;
