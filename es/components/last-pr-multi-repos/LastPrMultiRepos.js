@@ -73,8 +73,11 @@ var LastPrMultiRepos = function (_Component) {
             this.props.currentPage = this.props.nextPage;
             this.props.nbPages = lastPullRequests.length;
             this.props.nextPage = this.props.currentPage < this.props.nbPages - 1 ? this.props.currentPage + 1 : 0;
-            console.log('nbPages', this.props.nbPages);
-            console.log('lastPullRequests.length', lastPullRequests.length);
+
+            console.log('this.props.nextPage: ', this.props.nextPage);
+            console.log('this.props.currentPage: ', this.props.currentPage);
+            console.log('this.props.nbPages: ', this.props.nbPages);
+            console.log('lastPullRequests.length: ', lastPullRequests.length);
             // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
             count = this.props.currentPage + ' / ' + this.props.nbPages;
