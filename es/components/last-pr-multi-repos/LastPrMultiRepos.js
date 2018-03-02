@@ -16,10 +16,7 @@ var LastPrMultiRepos = function (_Component) {
     function LastPrMultiRepos() {
         _classCallCheck(this, LastPrMultiRepos);
 
-        var _this = _possibleConstructorReturn(this, _Component.call(this));
-
-        console.log('Component has been built');
-        return _this;
+        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
     }
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
