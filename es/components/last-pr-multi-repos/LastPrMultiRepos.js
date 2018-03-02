@@ -129,10 +129,6 @@ var LastPrMultiRepos = function (_Component) {
         );
     };
 
-    LastPrMultiRepos.prototype.componentWillUnmount = function componentWillUnmount() {
-        console.log('Component destroyed');
-    };
-
     return LastPrMultiRepos;
 }(Component);
 
