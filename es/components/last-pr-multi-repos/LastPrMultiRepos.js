@@ -48,7 +48,9 @@ var LastPrMultiRepos = function (_Component) {
                 }
             }
         }
-        lastPullRequests.push(pr);
+        if (pr.length) {
+            lastPullRequests.push(pr);
+        }
         return lastPullRequests;
     };
 
@@ -57,7 +59,7 @@ var LastPrMultiRepos = function (_Component) {
 
         setInterval(function () {
             if (_this2.props.apiData) {
-                _this2.props.currentPage += _this2.props.currentPage === _this2.getLastPullRequests().length ? 1 : 0;
+                _this2.props.currentPage += _this2.props.currentPage === _this2.getLastPullRequests().length - 1 ? 1 : 0;
                 console.log('Current page', _this2.props.currentPage);
                 _this2.setState();
             } else {
@@ -84,7 +86,7 @@ var LastPrMultiRepos = function (_Component) {
 
             var lastPullRequests = this.getLastPullRequests();
 
-            count = this.props.currentPage + ' / ' + lastPullRequests.length;
+            count = this.props.currentPage + ' / ' + lastPullRequests.length - 1;
             body = React.createElement(
                 'div',
                 null,
