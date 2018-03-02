@@ -84,13 +84,12 @@ var LastPrMultiRepos = function (_Component) {
 
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
-        var page = 0;
         if (apiData) {
             console.log('apiData', apiData.length, apiData);
 
             var lastPullRequests = this.getLastPullRequests();
 
-            count = this.props.currentPage + ' / ' + (lastPullRequests.length - 1);
+            count = this.props.currentPage + 1 + ' / ' + (lastPullRequests.length - 1);
             body = React.createElement(
                 'div',
                 null,
