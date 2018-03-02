@@ -70,7 +70,7 @@ var LastPrMultiRepos = function (_Component) {
                 }
             }
             lastPullRequests.push(pr);
-            this.props.currentPage = nextPage;
+            this.props.currentPage = this.props.nextPage;
             this.props.nbPages = lastPullRequests.length;
             this.props.nextPage = this.props.currentPage < this.props.nbPages - 1 ? this.props.currentPage + 1 : 0;
             console.log('nbPages', this.props.nbPages);
