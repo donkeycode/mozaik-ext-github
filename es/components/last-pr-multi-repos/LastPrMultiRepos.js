@@ -27,6 +27,7 @@ var LastPrMultiRepos = function (_Component) {
     };
 
     LastPrMultiRepos.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
+        return false;
         console.log('shouldComponentUpdate');
     };
 
