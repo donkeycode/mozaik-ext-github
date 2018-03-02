@@ -29,25 +29,54 @@ var LastPrMultiRepos = function (_Component) {
         };
     };
 
+    LastPrMultiRepos.getLastPullRequests = function getLastPullRequests() {
+        var _props = this.props,
+            apiData = _props.apiData,
+            elemOnPage = _props.elemOnPage;
+
+        var lastPullRequests = [];
+
+        var pr = [];
+        for (var i = 0; i < apiData.length; i++) {
+            for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                pr.push(apiData[i].pullRequests[j]);
+                if (elemOnPage) {
+                    if (pr.length === elemOnPage) {
+                        lastPullRequests.push(pr);
+                        pr = [];
+                    }
+                }
+            }
+        }
+        lastPullRequests.push(pr);
+        return lastPullRequests;
+    };
+
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
-        // setInterval(() => {
-        //     console.log('Setting current page', this.props.currentPage);
-        //     console.log('this.props.nbPages', this.props.nbPages);
-        //     var nextPage = (this.props.currentPage < this.props.nbPages - 1) ? this.props.currentPage + 1 : 0;
-        //     console.log(nextPage);
-        //     this.props.currentPage = nextPage;
-        //     this.setState();
-        // }, 5000);
+        var _this2 = this;
+
+        setInterval(function () {
+            if (_this2.props.apiData) {
+                console.log('Setting current page', _this2.props.currentPage);
+                console.log('this.props.nbPages', _this2.props.nbPages);
+                var nextPage = _this2.props.currentPage < _this2.getLastPullRequests().length - 1 ? _this2.props.currentPage + 1 : 0;
+                console.log(nextPage);
+                _this2.props.currentPage = nextPage;
+                _this2.setState();
+            } else {
+                console.log('No API data');
+            }
+        }, 5000);
     };
 
     LastPrMultiRepos.prototype.render = function render() {
-        var _props = this.props,
-            repository = _props.repository,
-            title = _props.title,
-            apiData = _props.apiData,
-            apiError = _props.apiError,
-            elemOnPage = _props.elemOnPage,
-            currentPage = _props.currentPage;
+        var _props2 = this.props,
+            repository = _props2.repository,
+            title = _props2.title,
+            apiData = _props2.apiData,
+            apiError = _props2.apiError,
+            elemOnPage = _props2.elemOnPage,
+            currentPage = _props2.currentPage;
 
 
         var body = React.createElement(WidgetLoader, null);
@@ -55,30 +84,10 @@ var LastPrMultiRepos = function (_Component) {
         var page = 0;
         if (apiData) {
             console.log('apiData', apiData.length, apiData);
-            var lastPullRequests = [];
 
-            var pr = [];
-            for (var i = 0; i < apiData.length; i++) {
-                for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                    pr.push(apiData[i].pullRequests[j]);
-                    if (elemOnPage) {
-                        if (pr.length === elemOnPage) {
-                            lastPullRequests.push(pr);
-                            pr = [];
-                        }
-                    }
-                }
-            }
-            lastPullRequests.push(pr);
-            this.props.currentPage = this.props.nextPage;
+            var lastPullRequests = this.getLastPullRequests();
+
             this.props.nbPages = lastPullRequests.length;
-            this.props.nextPage = this.props.currentPage < this.props.nbPages - 1 ? this.props.currentPage + 1 : 0;
-
-            console.log('this.props.nextPage: ', this.props.nextPage);
-            console.log('this.props.currentPage: ', this.props.currentPage);
-            console.log('this.props.nbPages: ', this.props.nbPages);
-            console.log('lastPullRequests.length: ', lastPullRequests.length);
-            // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
             console.log('lastPullRequests', lastPullRequests);
             count = this.props.currentPage + ' / ' + this.props.nbPages;
             body = React.createElement(
