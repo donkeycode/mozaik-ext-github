@@ -22,6 +22,22 @@ var LastPrMultiRepos = function (_Component) {
         return _this;
     }
 
+    LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps() {
+        console.log('componentWillReceiveProps');
+    };
+
+    LastPrMultiRepos.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
+        console.log('shouldComponentUpdate');
+    };
+
+    LastPrMultiRepos.prototype.componentWillUpdate = function componentWillUpdate() {
+        console.log('componentWillUpdate');
+    };
+
+    LastPrMultiRepos.prototype.componentDidUpdate = function componentDidUpdate() {
+        console.log('componentDidUpdate');
+    };
+
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
         var repositories = _ref.repositories,
             owner = _ref.owner;
