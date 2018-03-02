@@ -30,16 +30,14 @@ var LastPrMultiRepos = function (_Component) {
     };
 
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
-        var _this2 = this;
-
-        setInterval(function () {
-            console.log('Setting current page', _this2.props.currentPage);
-            console.log('this.props.nbPages', _this2.props.nbPages);
-            var nextPage = _this2.props.currentPage < _this2.props.nbPages - 1 ? _this2.props.currentPage + 1 : 0;
-            console.log(nextPage);
-            _this2.props.currentPage = nextPage;
-            _this2.setState();
-        }, 5000);
+        // setInterval(() => {
+        //     console.log('Setting current page', this.props.currentPage);
+        //     console.log('this.props.nbPages', this.props.nbPages);
+        //     var nextPage = (this.props.currentPage < this.props.nbPages - 1) ? this.props.currentPage + 1 : 0;
+        //     console.log(nextPage);
+        //     this.props.currentPage = nextPage;
+        //     this.setState();
+        // }, 5000);
     };
 
     LastPrMultiRepos.prototype.render = function render() {
@@ -72,7 +70,9 @@ var LastPrMultiRepos = function (_Component) {
                 }
             }
             lastPullRequests.push(pr);
+            this.props.currentPage = nextPage;
             this.props.nbPages = lastPullRequests.length;
+            this.props.nextPage = this.props.currentPage < this.props.nbPages - 1 ? this.props.currentPage + 1 : 0;
             console.log('nbPages', this.props.nbPages);
             console.log('lastPullRequests.length', lastPullRequests.length);
             // lastPullRequests.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
@@ -134,6 +134,6 @@ LastPrMultiRepos.PropTypes = {
 };
 LastPrMultiRepos.defaultProps = {
     currentPage: 0,
-    nbPages: 1
+    nextPage: 0
 };
 export default LastPrMultiRepos;
