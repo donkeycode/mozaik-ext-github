@@ -57,11 +57,8 @@ var LastPrMultiRepos = function (_Component) {
 
         setInterval(function () {
             if (_this2.props.apiData) {
-                console.log('Setting current page', _this2.props.currentPage);
-                console.log('this.props.nbPages', _this2.props.nbPages);
-                var nextPage = _this2.props.currentPage < _this2.getLastPullRequests().length - 1 ? _this2.props.currentPage + 1 : 0;
-                console.log(nextPage);
-                _this2.props.currentPage = nextPage;
+                _this2.props.currentPage += _this2.props.currentPage === _this2.getLastPullRequests().length ? 1 : 0;
+                console.log('Current page', _this2.props.currentPage);
                 _this2.setState();
             } else {
                 console.log('No API data');
@@ -87,9 +84,7 @@ var LastPrMultiRepos = function (_Component) {
 
             var lastPullRequests = this.getLastPullRequests();
 
-            this.props.nbPages = lastPullRequests.length;
-            console.log('lastPullRequests', lastPullRequests);
-            count = this.props.currentPage + ' / ' + this.props.nbPages;
+            count = this.props.currentPage + ' / ' + lastPullRequests.length;
             body = React.createElement(
                 'div',
                 null,
@@ -145,7 +140,6 @@ LastPrMultiRepos.PropTypes = {
     apiError: PropTypes.object
 };
 LastPrMultiRepos.defaultProps = {
-    currentPage: 0,
-    nextPage: 0
+    currentPage: 0
 };
 export default LastPrMultiRepos;
