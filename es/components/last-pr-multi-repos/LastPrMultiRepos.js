@@ -60,6 +60,7 @@ var LastPrMultiRepos = function (_Component) {
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
         var _this2 = this;
 
+        console.log('Component mounted');
         setInterval(function () {
             if (_this2.props.apiData) {
                 console.log(_this2.getLastPullRequests().length);
