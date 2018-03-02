@@ -78,8 +78,7 @@ var LastPrMultiRepos = function (_Component) {
             title = _props2.title,
             apiData = _props2.apiData,
             apiError = _props2.apiError,
-            elemOnPage = _props2.elemOnPage,
-            currentPage = _props2.currentPage;
+            elemOnPage = _props2.elemOnPage;
 
 
         var body = React.createElement(WidgetLoader, null);
