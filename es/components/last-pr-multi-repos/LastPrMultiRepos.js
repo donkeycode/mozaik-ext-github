@@ -36,7 +36,7 @@ var LastPrMultiRepos = function (_Component) {
             console.log('Setting current page', _this2.props.currentPage);
             var nextPage = _this2.props.currentPage < _this2.props.nbPages - 1 ? _this2.props.currentPage + 1 : 0;
             console.log(nextPage);
-            _this2.setState({ currentPage: nextPage });
+            _this2.setState(_this2.props.currentPage = nextPage);
         }, 5000);
     };
 
