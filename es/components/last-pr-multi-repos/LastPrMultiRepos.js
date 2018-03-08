@@ -22,22 +22,8 @@ var LastPrMultiRepos = function (_Component) {
         return _this;
     }
 
-    LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps() {
-        console.log('componentWillReceiveProps');
-        this.askNewData = false;
-    };
-
-    LastPrMultiRepos.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
-        return false;
-        console.log('shouldComponentUpdate');
-    };
-
-    LastPrMultiRepos.prototype.componentWillUpdate = function componentWillUpdate() {
-        console.log('componentWillUpdate');
-    };
-
-    LastPrMultiRepos.prototype.componentDidUpdate = function componentDidUpdate() {
-        console.log('componentDidUpdate');
+    LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+        nextProps.currentPage = this.props.currentPage;
     };
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
@@ -45,9 +31,26 @@ var LastPrMultiRepos = function (_Component) {
             owner = _ref.owner;
 
         return {
-            id: 'github.pullRequestsMultiRepos.' + repositories + '.' + owner + '.' + this.props.askNewData,
+            id: 'github.pullRequestsMultiRepos.' + repositories + '.' + owner,
             params: { repositories: repositories, owner: owner }
         };
+    };
+
+    LastPrMultiRepos.prototype.getAllPullRequests = function getAllPullRequests() {
+        var prs = [];
+        var apiData = this.props.apiData;
+
+
+        for (var i = 0; i < apiData.length; i++) {
+            for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                prs.push(apiData[i].pullRequests[j]);
+            }
+        }
+        prs.sort(function (a, b) {
+            return new Date(b.updated_at) - new Date(a.updated_at);
+        });
+
+        return prs;
     };
 
     LastPrMultiRepos.prototype.getLastPullRequests = function getLastPullRequests() {
@@ -56,43 +59,37 @@ var LastPrMultiRepos = function (_Component) {
             elemOnPage = _props.elemOnPage;
 
         var lastPullRequests = [];
-
+        var prs = this.getAllPullRequests();
         var pr = [];
-        for (var i = 0; i < apiData.length; i++) {
-            for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                pr.push(apiData[i].pullRequests[j]);
-                if (elemOnPage) {
-                    if (pr.length === elemOnPage) {
-                        lastPullRequests.push(pr);
-                        pr = [];
-                    }
+
+        for (var i = 0; i < prs.length; i++) {
+            pr.push(prs[i]);
+            if (elemOnPage) {
+                if (pr.length === elemOnPage) {
+                    lastPullRequests.push(pr);
+                    pr = [];
                 }
             }
         }
         if (pr.length) {
             lastPullRequests.push(pr);
         }
-        this.nbPage = lastPullRequests.length;
         return lastPullRequests;
+    };
+
+    LastPrMultiRepos.prototype.setCurrentPage = function setCurrentPage() {
+        if (this.props.apiData) {
+            this.props.currentPage = this.props.currentPage < this.getLastPullRequests().length - 1 ? this.props.currentPage + 1 : 0;
+            console.log('Current page', this.props.currentPage);
+            this.setState();
+        }
     };
 
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
         var _this2 = this;
 
-        console.log('Component mounted');
         setInterval(function () {
-            if (_this2.props.apiData) {
-                console.log(_this2.nbPage);
-                _this2.props.currentPage = _this2.props.currentPage < _this2.nbPage ? _this2.props.currentPage + 1 : 0;
-                console.log('Current page', _this2.props.currentPage);
-                if (_this2.props.currentPage === _this2.nbPr) {
-                    _this2.props.askNewData = true;
-                }
-                conosle.log('this.props.askNewData', _this2.props.askNewData);
-                _this2.setState();
-            } else {
-                console.log('No API data');
-            }
+            _this2.setCurrentPage();
         }, 5000);
     };
 
@@ -112,7 +109,7 @@ var LastPrMultiRepos = function (_Component) {
 
             var lastPullRequests = this.getLastPullRequests();
 
-            count = this.props.currentPage + 1 + ' /// ' + (lastPullRequests.length - 1);
+            count = this.props.currentPage + 1 + ' / ' + lastPullRequests.length;
             body = React.createElement(
                 'div',
                 null,
@@ -132,6 +129,8 @@ var LastPrMultiRepos = function (_Component) {
                     );
                 })
             );
+        } else {
+            console.log('No API DATA in render');
         }
 
         return React.createElement(
@@ -154,10 +153,6 @@ var LastPrMultiRepos = function (_Component) {
         );
     };
 
-    LastPrMultiRepos.prototype.componentWillUnmount = function componentWillUnmount() {
-        console.log('Component destroyed');
-    };
-
     return LastPrMultiRepos;
 }(Component);
 
@@ -172,8 +167,6 @@ LastPrMultiRepos.PropTypes = {
     apiError: PropTypes.object
 };
 LastPrMultiRepos.defaultProps = {
-    currentPage: 0,
-    askNewData: true,
-    nbPage: 0
+    currentPage: 0
 };
 export default LastPrMultiRepos;

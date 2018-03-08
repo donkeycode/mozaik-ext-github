@@ -37,7 +37,6 @@ var OrgBadge = function (_Component) {
 
         var body = React.createElement(WidgetLoader, null);
         if (orgInfo) {
-            console.log(orgInfo);
             body = React.createElement(
                 'div',
                 {

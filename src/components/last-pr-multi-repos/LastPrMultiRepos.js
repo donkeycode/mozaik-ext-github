@@ -16,76 +16,66 @@ export default class LastPrMultiRepos extends Component {
         apiError: PropTypes.object
     }
 
-    constructor(props) {
-        super(props);
-        console.log('Component has been built');
+    componentWillReceiveProps(nextProps) {
+        nextProps.currentPage = this.props.currentPage;
     }
-    componentWillReceiveProps() {
-        console.log('componentWillReceiveProps');
-        this.askNewData = false;
-    }
-shouldComponentUpdate() {
-    return false;
-    console.log('shouldComponentUpdate');
-}
-componentWillUpdate() {
-    console.log('componentWillUpdate');
-}
-componentDidUpdate() {
-    console.log('componentDidUpdate');
-}
 
     static getApiRequest({ repositories, owner }) {
         return {
-            id: `github.pullRequestsMultiRepos.${repositories}.${owner}.${this.props.askNewData}`,
+            id: `github.pullRequestsMultiRepos.${repositories}.${owner}`,
             params: { repositories, owner }
         }
     }
 
     static defaultProps = {
         currentPage: 0,
-        askNewData: true,
-        nbPage: 0
+    }
+
+    getAllPullRequests() {
+        const prs = [];
+        const { apiData } = this.props;
+
+        for (var i = 0; i < apiData.length; i++) {
+            for (var j = 0; j < apiData[i].pullRequests.length; j++) {
+                prs.push(apiData[i].pullRequests[j]);
+            }
+        }
+        prs.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        return prs;
     }
 
     getLastPullRequests() {
         const { apiData, elemOnPage } = this.props;
-        let lastPullRequests = [];
-
+        const lastPullRequests = [];
+        const prs = this.getAllPullRequests();
         var pr = [];
-        for (var i = 0; i < apiData.length; i++) {
-            for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                pr.push(apiData[i].pullRequests[j]);
-                if (elemOnPage) {
-                    if (pr.length === elemOnPage) {
-                        lastPullRequests.push(pr);
-                        pr = [];
-                    }
+
+        for (var i = 0; i < prs.length; i++) {
+            pr.push(prs[i]);
+            if (elemOnPage) {
+                if (pr.length === elemOnPage) {
+                    lastPullRequests.push(pr);
+                    pr = [];
                 }
             }
         }
         if (pr.length) {
             lastPullRequests.push(pr);
         }
-        this.nbPage = lastPullRequests.length;
         return lastPullRequests;
     }
 
+    setCurrentPage() {
+        if (this.props.apiData) {
+            this.props.currentPage = (this.props.currentPage < this.getLastPullRequests().length - 1) ? this.props.currentPage + 1 : 0;
+            this.setState();
+        }
+    }
+
     componentDidMount() {
-        console.log('Component mounted');
         setInterval(() => {
-            if (this.props.apiData) {
-                console.log(this.nbPage);
-                this.props.currentPage = (this.props.currentPage < this.nbPage) ? this.props.currentPage + 1 : 0;
-                console.log('Current page', this.props.currentPage);
-                if (this.props.currentPage === this.nbPr) {
-                    this.props.askNewData = true;
-                }
-                conosle.log('this.props.askNewData', this.props.askNewData);
-                this.setState();
-            } else {
-                console.log('No API data');
-            }
+            this.setCurrentPage();
         }, 5000);
     }
 
@@ -95,11 +85,9 @@ componentDidUpdate() {
         let body = <WidgetLoader/>;
         let count = 0;
         if (apiData) {
-            console.log('apiData', apiData.length, apiData);
-
             const lastPullRequests = this.getLastPullRequests();
 
-            count = (this.props.currentPage + 1) + ' /// ' + (lastPullRequests.length - 1);
+            count = (this.props.currentPage + 1) + ' / ' + (lastPullRequests.length);
             body = (
                 <div>
                     {lastPullRequests[this.props.currentPage].map(pullRequest =>
@@ -133,9 +121,5 @@ componentDidUpdate() {
                 </WidgetBody>
             </Widget>
         )
-    }
-
-    componentWillUnmount() {
-        console.log('Component destroyed');
     }
 }

@@ -80,21 +80,16 @@ const client = mozaik => {
             }))
         },
 
-        pullRequestsMultiRepos({ repositories, owner, buildRequest = true }) {
-            if (buildRequest) {
-                return buildApiRequest(`/search/repositories?q=org:${owner}&sort=updated&order=desc`)
-                .then(((res) => {
-                        // console.log(res);
-                        return Promise.all(
-                            res.body.items.map(repo => {
-                                return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }))
-                            })
-                        )
-                    })
-                )
-            } else {
-                return null;
-            }
+        pullRequestsMultiRepos({ repositories, owner }) {
+            return buildApiRequest(`/search/repositories?q=org:${owner}&sort=updated&order=desc`)
+            .then(((res) => {
+                    return Promise.all(
+                        res.body.items.map(repo => {
+                            return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }))
+                        })
+                    )
+                })
+            )
         },
 
         repositoryParticipationStats({ repository }) {
