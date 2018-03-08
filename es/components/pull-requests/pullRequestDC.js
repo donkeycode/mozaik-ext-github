@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import ClockIcon from 'react-icons/lib/fa/clock-o';
-import { WidgetListItem, WidgetAvatar } from '@mozaik/ui';
+import { WidgetLabel, WidgetListItem, WidgetAvatar } from '@mozaik/ui';
 
 var PullRequestDC = function (_Component) {
     _inherits(PullRequestDC, _Component);
@@ -95,55 +95,61 @@ var PullRequestDC = function (_Component) {
 
         return React.createElement(
             'div',
-            {
-                style: {
-                    display: 'flex'
-                } },
-            React.createElement(WidgetListItem, {
-                title: React.createElement(
+            null,
+            React.createElement(
+                'div',
+                { style: {
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
+                    } },
+                React.createElement(
+                    WidgetAvatar,
+                    { href: user.html_url, size: '4vmin', style: { display: 'inlineBlock' } },
+                    React.createElement('img', { src: user.avatar_url, alt: user.login })
+                ),
+                React.createElement(
+                    'h2',
+                    { style: { marginLeft: '10px' } },
+                    React.createElement(
+                        'a',
+                        { href: '' + pullRequest.base.repo.html_url, target: '_blank' },
+                        pullRequest.base.repo.name
+                    )
+                ),
+                React.createElement(
+                    'span',
+                    { style: {
+                            marginLeft: '10px',
+                            display: 'flex',
+                            alignItems: 'center' } },
+                    React.createElement(ClockIcon, null),
+                    '\xA0',
+                    moment(updated_at).fromNow()
+                )
+            ),
+            React.createElement(
+                'div',
+                { style: { display: 'flex', marginLeft: '20px' } },
+                React.createElement(
                     'span',
                     null,
                     React.createElement(
                         'a',
                         { href: html_url, target: '_blank' },
                         title
-                    ),
-                    ' ',
-                    'by',
-                    ' ',
-                    React.createElement(
-                        'a',
-                        { href: user.html_url, target: '_blank' },
-                        user.login
                     )
                 ),
-                pre: React.createElement(
-                    WidgetAvatar,
-                    { href: user.html_url, size: '4vmin' },
-                    React.createElement('img', { src: user.avatar_url, alt: user.login })
-                ),
-                meta: React.createElement(
-                    'span',
+                React.createElement(
+                    'div',
                     {
                         style: {
                             display: 'flex',
                             alignItems: 'center'
-                        }
-                    },
-                    React.createElement(ClockIcon, null),
-                    '\xA0',
-                    moment(updated_at).fromNow()
+                        } },
+                    labelsBody,
+                    reviewersBody
                 )
-            }),
-            React.createElement(
-                'div',
-                {
-                    style: {
-                        display: 'flex',
-                        alignItems: 'center'
-                    } },
-                labelsBody,
-                reviewersBody
             )
         );
     };

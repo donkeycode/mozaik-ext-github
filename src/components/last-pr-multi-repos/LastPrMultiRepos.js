@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { WidgetLabel, TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
+import { TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
 import GithubIcon from 'react-icons/lib/fa/github-alt'
 import PullRequestDC from '../pull-requests/PullRequestDC'
 
@@ -90,15 +90,7 @@ export default class LastPrMultiRepos extends Component {
             body = (
                 <div>
                     {lastPullRequests[this.props.currentPage].map(pullRequest =>
-                        <div>
-                            <WidgetLabel
-                                label={
-                                    <a href={`${pullRequest.base.repo.html_url}`} target="_blank">
-                                        {pullRequest.base.repo.name}
-                                    </a>
-                                }
-                                style={{ width: '100%', marginBottom: '1vmin' }}
-                            />
+                        <div style={{marginTop: '20px', marginBottom: '20px'}}>
                             <PullRequestDC key={pullRequest.id} pullRequest={pullRequest} />
                         </div>
                     )}
@@ -109,7 +101,7 @@ export default class LastPrMultiRepos extends Component {
         return (
             <Widget>
                 <WidgetHeader
-                    title={title || 'Last Pull Requests'}
+                    title={title || 'Last PR'}
                     icon={GithubIcon}
                     count={count}
                 />

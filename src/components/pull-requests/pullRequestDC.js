@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import ClockIcon from 'react-icons/lib/fa/clock-o'
-import { WidgetListItem, WidgetAvatar } from '@mozaik/ui'
+import { WidgetLabel, WidgetListItem, WidgetAvatar } from '@mozaik/ui'
 
 export default class PullRequestDC extends Component {
     static propTypes = {
@@ -75,46 +75,42 @@ export default class PullRequestDC extends Component {
         }
 
         return (
-            <div
-                style={{
-                    display: 'flex'
+            <div>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center'
                 }}>
-                <WidgetListItem
-                    title={
-                        <span>
-                            <a href={html_url} target="_blank">
-                                {title}
-                            </a>{' '}
-                            by{' '}
-                            <a href={user.html_url} target="_blank">
-                                {user.login}
-                            </a>
-                        </span>
-                    }
-                    pre={
-                        <WidgetAvatar href={user.html_url} size="4vmin">
-                            <img src={user.avatar_url} alt={user.login} />
-                        </WidgetAvatar>
-                    }
-                    meta={
-                        <span
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <ClockIcon />&nbsp;
-                            {moment(updated_at).fromNow()}
-                        </span>
-                    }
-                />
-                <div
-                    style={{
+                    <WidgetAvatar href={user.html_url} size="4vmin" style={{ display: 'inlineBlock', marginLeft: '10px' }}>
+                        <img src={user.avatar_url} alt={user.login} />
+                    </WidgetAvatar>
+                    <h2 style={{ marginLeft: '10px' }}>
+                        <a href={`${pullRequest.base.repo.html_url}`} target="_blank">
+                            {pullRequest.base.repo.name}
+                        </a>
+                    </h2>
+                    <span style={{
+                        marginLeft: '10px',
                         display: 'flex',
-                        alignItems: 'center'
-                    }}>
-                    {labelsBody}
-                    {reviewersBody}
+                        alignItems: 'center' }}>
+                        <ClockIcon />&nbsp;
+                        {moment(updated_at).fromNow()}
+                    </span>
+                </div>
+                <div style={{ display: 'flex', marginLeft: '20px' }}>
+                    <span>
+                        <a href={html_url} target="_blank">
+                            {title}
+                        </a>
+                    </span>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                        {labelsBody}
+                        {reviewersBody}
+                    </div>
                 </div>
             </div>
         )

@@ -6,7 +6,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { WidgetLabel, TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
+import { TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
 import GithubIcon from 'react-icons/lib/fa/github-alt';
 import PullRequestDC from '../pull-requests/PullRequestDC';
 
@@ -109,15 +109,7 @@ var LastPrMultiRepos = function (_Component) {
                 lastPullRequests[this.props.currentPage].map(function (pullRequest) {
                     return React.createElement(
                         'div',
-                        null,
-                        React.createElement(WidgetLabel, {
-                            label: React.createElement(
-                                'a',
-                                { href: '' + pullRequest.base.repo.html_url, target: '_blank' },
-                                pullRequest.base.repo.name
-                            ),
-                            style: { width: '100%', marginBottom: '1vmin' }
-                        }),
+                        { style: { marginTop: '20px', marginBottom: '20px' } },
                         React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
                     );
                 })
@@ -128,7 +120,7 @@ var LastPrMultiRepos = function (_Component) {
             Widget,
             null,
             React.createElement(WidgetHeader, {
-                title: title || 'Last Pull Requests',
+                title: title || 'Last PR',
                 icon: GithubIcon,
                 count: count
             }),
