@@ -80,8 +80,8 @@ const client = mozaik => {
             }))
         },
 
-        pullRequestsMultiRepos({ repositories, owner }) {
-            return buildApiRequest(`/search/repositories?q=org:${owner}&sort=updated&order=desc`)
+        pullRequestsMultiRepos({ organisation }) {
+            return buildApiRequest(`/search/repositories?q=org:${organisation}&sort=updated&order=desc`)
             .then(((res) => {
                     return Promise.all(
                         res.body.items.map(repo => {

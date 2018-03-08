@@ -13,13 +13,10 @@ import PullRequestDC from '../pull-requests/PullRequestDC';
 var LastPrMultiRepos = function (_Component) {
     _inherits(LastPrMultiRepos, _Component);
 
-    function LastPrMultiRepos(props) {
+    function LastPrMultiRepos() {
         _classCallCheck(this, LastPrMultiRepos);
 
-        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-
-        console.log('Component has been built');
-        return _this;
+        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
     }
 
     LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
@@ -27,12 +24,11 @@ var LastPrMultiRepos = function (_Component) {
     };
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
-        var repositories = _ref.repositories,
-            owner = _ref.owner;
+        var organisation = _ref.organisation;
 
         return {
-            id: 'github.pullRequestsMultiRepos.' + repositories + '.' + owner,
-            params: { repositories: repositories, owner: owner }
+            id: 'github.pullRequestsMultiRepos.' + organisation,
+            params: { organisation: organisation }
         };
     };
 
@@ -80,7 +76,6 @@ var LastPrMultiRepos = function (_Component) {
     LastPrMultiRepos.prototype.setCurrentPage = function setCurrentPage() {
         if (this.props.apiData) {
             this.props.currentPage = this.props.currentPage < this.getLastPullRequests().length - 1 ? this.props.currentPage + 1 : 0;
-            console.log('Current page', this.props.currentPage);
             this.setState();
         }
     };
@@ -105,8 +100,6 @@ var LastPrMultiRepos = function (_Component) {
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
         if (apiData) {
-            console.log('apiData', apiData.length, apiData);
-
             var lastPullRequests = this.getLastPullRequests();
 
             count = this.props.currentPage + 1 + ' / ' + lastPullRequests.length;
@@ -129,8 +122,6 @@ var LastPrMultiRepos = function (_Component) {
                     );
                 })
             );
-        } else {
-            console.log('No API DATA in render');
         }
 
         return React.createElement(
@@ -157,8 +148,7 @@ var LastPrMultiRepos = function (_Component) {
 }(Component);
 
 LastPrMultiRepos.PropTypes = {
-    repositories: PropTypes.arrayOf(PropTypes.string).isRequired,
-    owner: PropTypes.string.isRequired,
+    organisation: PropTypes.string.isRequired,
     title: PropTypes.string,
     elemOnPage: PropTypes.number,
     apiData: PropTypes.shape({

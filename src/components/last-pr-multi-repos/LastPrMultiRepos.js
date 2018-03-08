@@ -6,8 +6,7 @@ import PullRequestDC from '../pull-requests/PullRequestDC'
 
 export default class LastPrMultiRepos extends Component {
     static PropTypes = {
-        repositories: PropTypes.arrayOf(PropTypes.string).isRequired,
-        owner: PropTypes.string.isRequired,
+        organisation: PropTypes.string.isRequired,
         title: PropTypes.string,
         elemOnPage: PropTypes.number,
         apiData: PropTypes.shape({
@@ -20,10 +19,10 @@ export default class LastPrMultiRepos extends Component {
         nextProps.currentPage = this.props.currentPage;
     }
 
-    static getApiRequest({ repositories, owner }) {
+    static getApiRequest({ organisation }) {
         return {
-            id: `github.pullRequestsMultiRepos.${repositories}.${owner}`,
-            params: { repositories, owner }
+            id: `github.pullRequestsMultiRepos.${organisation}`,
+            params: { organisation }
         }
     }
 
