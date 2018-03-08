@@ -24,6 +24,7 @@ var LastPrMultiRepos = function (_Component) {
 
     LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps() {
         console.log('componentWillReceiveProps');
+        this.askNewData = false;
     };
 
     LastPrMultiRepos.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
@@ -44,7 +45,7 @@ var LastPrMultiRepos = function (_Component) {
             owner = _ref.owner;
 
         return {
-            id: 'github.pullRequestsMultiRepos.' + repositories + '.' + owner,
+            id: 'github.pullRequestsMultiRepos.' + repositories + '.' + owner + '.' + this.props.askNewData,
             params: { repositories: repositories, owner: owner }
         };
     };
@@ -71,6 +72,7 @@ var LastPrMultiRepos = function (_Component) {
         if (pr.length) {
             lastPullRequests.push(pr);
         }
+        this.nbPage = lastPullRequests.length;
         return lastPullRequests;
     };
 
@@ -80,9 +82,12 @@ var LastPrMultiRepos = function (_Component) {
         console.log('Component mounted');
         setInterval(function () {
             if (_this2.props.apiData) {
-                console.log(_this2.getLastPullRequests().length);
-                _this2.props.currentPage = _this2.props.currentPage < _this2.getLastPullRequests().length ? _this2.props.currentPage + 1 : 0;
+                console.log(_this2.nbPage);
+                _this2.props.currentPage = _this2.props.currentPage < _this2.nbPage ? _this2.props.currentPage + 1 : 0;
                 console.log('Current page', _this2.props.currentPage);
+                if (_this2.props.currentPage === _this2.nbPr) {
+                    _this2.props.askNewData = true;
+                }
                 _this2.setState();
             } else {
                 console.log('No API data');
@@ -166,6 +171,8 @@ LastPrMultiRepos.PropTypes = {
     apiError: PropTypes.object
 };
 LastPrMultiRepos.defaultProps = {
-    currentPage: 0
+    currentPage: 0,
+    askNewData: true,
+    nbPage: 0
 };
 export default LastPrMultiRepos;

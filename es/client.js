@@ -93,14 +93,20 @@ var client = function client(mozaik) {
         },
         pullRequestsMultiRepos: function pullRequestsMultiRepos(_ref8) {
             var repositories = _ref8.repositories,
-                owner = _ref8.owner;
+                owner = _ref8.owner,
+                _ref8$buildRequest = _ref8.buildRequest,
+                buildRequest = _ref8$buildRequest === undefined ? true : _ref8$buildRequest;
 
-            return buildApiRequest('/search/repositories?q=org:' + owner + '&sort=updated&order=desc').then(function (res) {
-                // console.log(res);
-                return Promise.all(res.body.items.map(function (repo) {
-                    return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }));
-                }));
-            });
+            if (buildRequest) {
+                return buildApiRequest('/search/repositories?q=org:' + owner + '&sort=updated&order=desc').then(function (res) {
+                    // console.log(res);
+                    return Promise.all(res.body.items.map(function (repo) {
+                        return apiCalls.pullRequests(Object.assign({ repository: repo.full_name }));
+                    }));
+                });
+            } else {
+                return null;
+            }
         },
         repositoryParticipationStats: function repositoryParticipationStats(_ref9) {
             var repository = _ref9.repository;
