@@ -88,6 +88,7 @@ var LastPrMultiRepos = function (_Component) {
                 if (_this2.props.currentPage === _this2.nbPr) {
                     _this2.props.askNewData = true;
                 }
+                conosle.log('this.props.askNewData', _this2.props.askNewData);
                 _this2.setState();
             } else {
                 console.log('No API data');
