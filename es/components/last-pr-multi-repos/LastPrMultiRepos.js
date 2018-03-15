@@ -90,6 +90,7 @@ var LastPrMultiRepos = function (_Component) {
 
     LastPrMultiRepos.prototype.render = function render() {
         var _props2 = this.props,
+            view = _props2.view,
             repository = _props2.repository,
             title = _props2.title,
             apiData = _props2.apiData,
@@ -99,17 +100,18 @@ var LastPrMultiRepos = function (_Component) {
 
         var body = React.createElement(WidgetLoader, null);
         var count = 0;
+        var viewId = view === 'tv' ? 'tv' : 'screen';
         if (apiData) {
             var lastPullRequests = this.getLastPullRequests();
 
             count = this.props.currentPage + 1 + ' / ' + lastPullRequests.length;
             body = React.createElement(
                 'div',
-                null,
+                { id: viewId },
                 lastPullRequests[this.props.currentPage].map(function (pullRequest) {
                     return React.createElement(
                         'div',
-                        { 'class': 'pull-request' },
+                        { className: 'pull-request' },
                         React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
                     );
                 })
@@ -143,6 +145,7 @@ LastPrMultiRepos.PropTypes = {
     organisation: PropTypes.string.isRequired,
     title: PropTypes.string,
     elemOnPage: PropTypes.number,
+    view: PropTypes.string,
     apiData: PropTypes.shape({
         LastPrMultiRepos: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired
     }),
