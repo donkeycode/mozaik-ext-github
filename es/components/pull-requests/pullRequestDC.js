@@ -34,26 +34,14 @@ var PullRequestDC = function (_Component) {
         if (requested_reviewers.length) {
             reviewersBody = React.createElement(
                 'div',
-                {
-                    style: {
-                        display: 'flex'
-                    } },
+                { 'class': 'reviewers' },
                 requested_reviewers.map(function (reviewer) {
                     return React.createElement(
                         'div',
-                        { style: {
-                                margin: '0 1vmin'
-                            } },
+                        { 'class': 'reviewer' },
                         React.createElement(
                             'a',
-                            {
-                                style: {
-                                    border: '3px solid rgb(132, 16, 16)',
-                                    display: 'inline-block',
-                                    borderRadius: '30px',
-                                    boxShadow: '0px 0px 1px 2px #f5ecec'
-                                },
-                                href: reviewer.html_url, target: '_blank' },
+                            { 'class': 'avatar', href: reviewer.html_url, target: '_blank' },
                             React.createElement(
                                 WidgetAvatar,
                                 { href: reviewer.html_url, size: '3vmin' },
@@ -68,21 +56,11 @@ var PullRequestDC = function (_Component) {
         if (labels.length) {
             labelsBody = React.createElement(
                 'div',
-                {
-                    style: {
-                        display: 'flex',
-                        alignItems: 'center',
-                        margin: '0 1vmin'
-                    } },
+                { 'class': 'labels' },
                 labels.map(function (label) {
                     return React.createElement(
                         'div',
-                        {
-                            style: {
-                                background: '#' + label.color,
-                                textAlign: 'center',
-                                padding: '0 1vmin'
-                            } },
+                        { 'class': 'label', style: { background: '#' + label.color } },
                         React.createElement(
                             'span',
                             null,
@@ -95,22 +73,18 @@ var PullRequestDC = function (_Component) {
 
         return React.createElement(
             'div',
-            null,
+            { 'class': 'pr-dc' },
             React.createElement(
                 'div',
-                { style: {
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center'
-                    } },
+                null,
                 React.createElement(
                     WidgetAvatar,
-                    { href: user.html_url, size: '4vmin', style: { display: 'inlineBlock' } },
+                    { href: user.html_url, size: '4vmin', style: { display: 'inlineBlock', marginLeft: '10px' } },
                     React.createElement('img', { src: user.avatar_url, alt: user.login })
                 ),
                 React.createElement(
                     'h2',
-                    { style: { marginLeft: '10px' } },
+                    { 'class': 'repo-name' },
                     React.createElement(
                         'a',
                         { href: '' + pullRequest.base.repo.html_url, target: '_blank' },
@@ -119,10 +93,7 @@ var PullRequestDC = function (_Component) {
                 ),
                 React.createElement(
                     'span',
-                    { style: {
-                            marginLeft: '10px',
-                            display: 'flex',
-                            alignItems: 'center' } },
+                    { 'class': 'clock' },
                     React.createElement(ClockIcon, null),
                     '\xA0',
                     moment(updated_at).fromNow()
@@ -130,7 +101,7 @@ var PullRequestDC = function (_Component) {
             ),
             React.createElement(
                 'div',
-                { style: { display: 'flex', marginLeft: '20px' } },
+                { 'class': 'right-part' },
                 React.createElement(
                     'span',
                     null,
@@ -142,11 +113,7 @@ var PullRequestDC = function (_Component) {
                 ),
                 React.createElement(
                     'div',
-                    {
-                        style: {
-                            display: 'flex',
-                            alignItems: 'center'
-                        } },
+                    { 'class': 'pr-infos' },
                     labelsBody,
                     reviewersBody
                 )

@@ -109,7 +109,7 @@ var LastPrMultiRepos = function (_Component) {
                 lastPullRequests[this.props.currentPage].map(function (pullRequest) {
                     return React.createElement(
                         'div',
-                        { style: { marginTop: '20px', marginBottom: '20px' } },
+                        { 'class': 'pull-request' },
                         React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
                     );
                 })
