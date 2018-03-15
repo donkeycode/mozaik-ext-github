@@ -9,6 +9,7 @@ export default class LastPrMultiRepos extends Component {
         organisation: PropTypes.string.isRequired,
         title: PropTypes.string,
         elemOnPage: PropTypes.number,
+        view: PropTypes.string,
         apiData: PropTypes.shape({
             LastPrMultiRepos: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired
         }),
@@ -79,18 +80,19 @@ export default class LastPrMultiRepos extends Component {
     }
 
     render() {
-        const { repository, title, apiData, apiError, elemOnPage } = this.props;
+        const { view, repository, title, apiData, apiError, elemOnPage } = this.props;
 
         let body = <WidgetLoader/>;
         let count = 0;
+        let viewId = view === 'tv' ? 'tv' : 'screen';
         if (apiData) {
             const lastPullRequests = this.getLastPullRequests();
 
             count = (this.props.currentPage + 1) + ' / ' + (lastPullRequests.length);
             body = (
-                <div>
+                <div id={viewId}>
                     {lastPullRequests[this.props.currentPage].map(pullRequest =>
-                        <div style={{marginTop: '20px', marginBottom: '20px'}}>
+                        <div className="pull-request">
                             <PullRequestDC key={pullRequest.id} pullRequest={pullRequest} />
                         </div>
                     )}

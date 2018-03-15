@@ -26,22 +26,10 @@ export default class PullRequestDC extends Component {
         let labelsBody = null;
         if (requested_reviewers.length) {
             reviewersBody = (
-                <div
-                    style={{
-                        display: 'flex'
-                    }}>
+                <div className="reviewers">
                     {requested_reviewers.map((reviewer) =>
-                        <div style={{
-                            margin: '0 1vmin'
-                        }}>
-                            <a
-                            style={{
-                                border: '3px solid rgb(132, 16, 16)',
-                                display: 'inline-block',
-                                borderRadius: '30px',
-                                boxShadow: '0px 0px 1px 2px #f5ecec'
-                            }}
-                            href={reviewer.html_url} target="_blank">
+                        <div className="reviewer">
+                            <a className="avatar" href={reviewer.html_url} target="_blank">
                                 <WidgetAvatar href={reviewer.html_url} size="3vmin">
                                     <img src={reviewer.avatar_url} alt={reviewer.login} />
                                 </WidgetAvatar>
@@ -54,19 +42,9 @@ export default class PullRequestDC extends Component {
 
         if (labels.length) {
             labelsBody = (
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        margin: '0 1vmin'
-                    }}>
+                <div className="labels">
                     {labels.map((label) =>
-                        <div
-                            style={{
-                                background: '#' + label.color,
-                                textAlign: 'center',
-                                padding: '0 1vmin'
-                            }}>
+                        <div className="label" style={{ background: '#' + label.color }}>
                             <span>{label.name}</span>
                         </div>
                     )}
@@ -76,41 +54,30 @@ export default class PullRequestDC extends Component {
 
         return (
             <div>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center'
-                }}>
+                <div className="pr-dc">
                     <WidgetAvatar href={user.html_url} size="4vmin" style={{ display: 'inlineBlock', marginLeft: '10px' }}>
                         <img src={user.avatar_url} alt={user.login} />
                     </WidgetAvatar>
-                    <h2 style={{ marginLeft: '10px' }}>
+                    <h2 className="repo-name">
                         <a href={`${pullRequest.base.repo.html_url}`} target="_blank">
                             {pullRequest.base.repo.name}
                         </a>
                     </h2>
-                    <span style={{
-                        marginLeft: '10px',
-                        display: 'flex',
-                        alignItems: 'center' }}>
+                    <span className="clock">
                         <ClockIcon />&nbsp;
                         {moment(updated_at).fromNow()}
                     </span>
                 </div>
-                <div style={{ display: 'flex', marginLeft: '20px' }}>
+                <div className="pr-title">
                     <span>
                         <a href={html_url} target="_blank">
                             {title}
                         </a>
                     </span>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}>
-                        {labelsBody}
-                        {reviewersBody}
-                    </div>
+                </div>
+                <div className="pr-infos-more">
+                    {labelsBody}
+                    {reviewersBody}
                 </div>
             </div>
         )
