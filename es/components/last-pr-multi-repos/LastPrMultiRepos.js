@@ -8,19 +8,29 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
 import GithubIcon from 'react-icons/lib/fa/github-alt';
+import FaPause from 'react-icons/lib/fa/pause';
+import FaPlay from 'react-icons/lib/fa/play';
+import FaBackward from 'react-icons/lib/fa/backward';
+import FaForward from 'react-icons/lib/fa/forward';
 import PullRequestDC from '../pull-requests/PullRequestDC';
 
 var LastPrMultiRepos = function (_Component) {
     _inherits(LastPrMultiRepos, _Component);
 
-    function LastPrMultiRepos() {
+    function LastPrMultiRepos(props) {
         _classCallCheck(this, LastPrMultiRepos);
 
-        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+        _this.goNextPage = _this.goNextPage.bind(_this);
+        _this.goPreviousPage = _this.goPreviousPage.bind(_this);
+        _this.playOrPause = _this.playOrPause.bind(_this);
+        return _this;
     }
 
     LastPrMultiRepos.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
         nextProps.currentPage = this.props.currentPage;
+        nextProps.playing = this.props.playing;
     };
 
     LastPrMultiRepos.getApiRequest = function getApiRequest(_ref) {
@@ -73,18 +83,31 @@ var LastPrMultiRepos = function (_Component) {
         return lastPullRequests;
     };
 
-    LastPrMultiRepos.prototype.setCurrentPage = function setCurrentPage() {
+    LastPrMultiRepos.prototype.goNextPage = function goNextPage() {
         if (this.props.apiData) {
             this.props.currentPage = this.props.currentPage < this.getLastPullRequests().length - 1 ? this.props.currentPage + 1 : 0;
             this.setState();
         }
     };
 
+    LastPrMultiRepos.prototype.goPreviousPage = function goPreviousPage() {
+        if (this.props.apiData) {
+            this.props.currentPage = this.props.currentPage > 0 ? this.props.currentPage - 1 : this.getLastPullRequests().length - 1;
+            this.setState();
+        }
+    };
+
+    LastPrMultiRepos.prototype.playOrPause = function playOrPause() {
+        this.props.playing = !this.props.playing;
+    };
+
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
         var _this2 = this;
 
         setInterval(function () {
-            _this2.setCurrentPage();
+            if (_this2.props.playing) {
+                _this2.goNextPage();
+            }
         }, 5000);
     };
 
@@ -104,7 +127,34 @@ var LastPrMultiRepos = function (_Component) {
         if (apiData) {
             var lastPullRequests = this.getLastPullRequests();
 
-            count = this.props.currentPage + 1 + ' / ' + lastPullRequests.length;
+            count = React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'div',
+                    { className: 'control' },
+                    React.createElement(
+                        'span',
+                        null,
+                        this.props.currentPage + 1 + ' / ' + lastPullRequests.length
+                    ),
+                    React.createElement(
+                        'a',
+                        { onClick: this.goPreviousPage },
+                        React.createElement(FaBackward, null)
+                    ),
+                    React.createElement(
+                        'a',
+                        { onClick: this.playOrPause },
+                        this.props.playing ? React.createElement(FaPause, null) : React.createElement(FaPlay, null)
+                    ),
+                    React.createElement(
+                        'a',
+                        { onClick: this.goNextPage },
+                        React.createElement(FaForward, null)
+                    )
+                )
+            );
             body = React.createElement(
                 'div',
                 { id: viewId },
@@ -152,6 +202,7 @@ LastPrMultiRepos.PropTypes = {
     apiError: PropTypes.object
 };
 LastPrMultiRepos.defaultProps = {
-    currentPage: 0
+    currentPage: 0,
+    playing: true
 };
 export default LastPrMultiRepos;

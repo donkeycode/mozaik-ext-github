@@ -1,8 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { TrapApiError, WidgetHeader, WidgetLoader, Widget, WidgetBody } from '@mozaik/ui';
-import GithubIcon from 'react-icons/lib/fa/github-alt'
-import PullRequestDC from '../pull-requests/PullRequestDC'
+import GithubIcon from 'react-icons/lib/fa/github-alt';
+import FaPause from 'react-icons/lib/fa/pause';
+import FaPlay from  'react-icons/lib/fa/play';
+import FaBackward from 'react-icons/lib/fa/backward';
+import FaForward from 'react-icons/lib/fa/forward';
+import PullRequestDC from '../pull-requests/PullRequestDC';
 
 export default class LastPrMultiRepos extends Component {
     static PropTypes = {
@@ -16,8 +20,17 @@ export default class LastPrMultiRepos extends Component {
         apiError: PropTypes.object
     }
 
+    constructor(props) {
+        super(props);
+
+        this.goNextPage = this.goNextPage.bind(this);
+        this.goPreviousPage = this.goPreviousPage.bind(this);
+        this.playOrPause = this.playOrPause.bind(this);
+    }
+
     componentWillReceiveProps(nextProps) {
         nextProps.currentPage = this.props.currentPage;
+        nextProps.playing = this.props.playing;
     }
 
     static getApiRequest({ organisation }) {
@@ -29,6 +42,7 @@ export default class LastPrMultiRepos extends Component {
 
     static defaultProps = {
         currentPage: 0,
+        playing: true
     }
 
     getAllPullRequests() {
@@ -66,16 +80,29 @@ export default class LastPrMultiRepos extends Component {
         return lastPullRequests;
     }
 
-    setCurrentPage() {
+    goNextPage() {
         if (this.props.apiData) {
             this.props.currentPage = (this.props.currentPage < this.getLastPullRequests().length - 1) ? this.props.currentPage + 1 : 0;
             this.setState();
         }
     }
 
+    goPreviousPage() {
+        if (this.props.apiData) {
+            this.props.currentPage = (this.props.currentPage > 0 ? this.props.currentPage - 1 : this.getLastPullRequests().length - 1);
+            this.setState();
+        }
+    }
+
+    playOrPause() {
+        this.props.playing = !this.props.playing;
+    }
+
     componentDidMount() {
         setInterval(() => {
-            this.setCurrentPage();
+            if (this.props.playing) {
+                this.goNextPage();
+            }
         }, 5000);
     }
 
@@ -88,7 +115,15 @@ export default class LastPrMultiRepos extends Component {
         if (apiData) {
             const lastPullRequests = this.getLastPullRequests();
 
-            count = (this.props.currentPage + 1) + ' / ' + (lastPullRequests.length);
+            count = (
+                <div>
+                    <div className="control">
+                        <span>{(this.props.currentPage + 1) + ' / ' + (lastPullRequests.length)}</span>
+                        <a onClick={this.goPreviousPage}><FaBackward /></a>
+                        <a onClick={this.playOrPause}>{this.props.playing ? <FaPause /> : <FaPlay />}</a>
+                        <a onClick={this.goNextPage}><FaForward /></a>
+                    </div>
+                </div>);
             body = (
                 <div id={viewId}>
                     {lastPullRequests[this.props.currentPage].map(pullRequest =>
