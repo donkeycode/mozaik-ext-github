@@ -99,6 +99,7 @@ var LastPrMultiRepos = function (_Component) {
 
     LastPrMultiRepos.prototype.playOrPause = function playOrPause() {
         this.props.playing = !this.props.playing;
+        this.setState();
     };
 
     LastPrMultiRepos.prototype.componentDidMount = function componentDidMount() {
@@ -136,7 +137,7 @@ var LastPrMultiRepos = function (_Component) {
                     React.createElement(
                         'span',
                         null,
-                        this.props.currentPage + 1 + ' / ' + lastPullRequests.length
+                        this.props.currentPage + 1 + ' // ' + lastPullRequests.length
                     ),
                     React.createElement(
                         'a',
