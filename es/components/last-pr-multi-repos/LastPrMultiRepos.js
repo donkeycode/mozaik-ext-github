@@ -137,7 +137,7 @@ var LastPrMultiRepos = function (_Component) {
                     React.createElement(
                         'span',
                         null,
-                        this.props.currentPage + 1 + ' // ' + lastPullRequests.length
+                        this.props.currentPage + 1 + ' / ' + lastPullRequests.length
                     ),
                     React.createElement(
                         'a',
