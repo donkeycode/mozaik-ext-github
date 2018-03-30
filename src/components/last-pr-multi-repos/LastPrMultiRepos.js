@@ -96,6 +96,7 @@ export default class LastPrMultiRepos extends Component {
 
     playOrPause() {
         this.props.playing = !this.props.playing;
+        this.setState();
     }
 
     componentDidMount() {
@@ -117,7 +118,7 @@ export default class LastPrMultiRepos extends Component {
 
             count = (
                 <div>
-                    <div className="control">
+                    <div className="control-prs">
                         <span>{(this.props.currentPage + 1) + ' / ' + (lastPullRequests.length)}</span>
                         <a onClick={this.goPreviousPage}><FaBackward /></a>
                         <a onClick={this.playOrPause}>{this.props.playing ? <FaPause /> : <FaPlay />}</a>
@@ -125,12 +126,14 @@ export default class LastPrMultiRepos extends Component {
                     </div>
                 </div>);
             body = (
-                <div id={viewId}>
-                    {lastPullRequests[this.props.currentPage].map(pullRequest =>
-                        <div className="pull-request">
-                            <PullRequestDC key={pullRequest.id} pullRequest={pullRequest} />
-                        </div>
-                    )}
+                <div id="prs">
+                    <div className={viewId}>
+                        {lastPullRequests[this.props.currentPage].map(pullRequest =>
+                            <div className="pull-request">
+                                <PullRequestDC key={pullRequest.id} pullRequest={pullRequest} />
+                            </div>
+                        )}
+                    </div>
                 </div>
             )
         }

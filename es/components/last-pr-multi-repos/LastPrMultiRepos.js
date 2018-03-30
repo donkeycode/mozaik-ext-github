@@ -133,7 +133,7 @@ var LastPrMultiRepos = function (_Component) {
                 null,
                 React.createElement(
                     'div',
-                    { className: 'control' },
+                    { className: 'control-prs' },
                     React.createElement(
                         'span',
                         null,
@@ -158,14 +158,18 @@ var LastPrMultiRepos = function (_Component) {
             );
             body = React.createElement(
                 'div',
-                { id: viewId },
-                lastPullRequests[this.props.currentPage].map(function (pullRequest) {
-                    return React.createElement(
-                        'div',
-                        { className: 'pull-request' },
-                        React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
-                    );
-                })
+                { id: 'prs' },
+                React.createElement(
+                    'div',
+                    { className: viewId },
+                    lastPullRequests[this.props.currentPage].map(function (pullRequest) {
+                        return React.createElement(
+                            'div',
+                            { className: 'pull-request' },
+                            React.createElement(PullRequestDC, { key: pullRequest.id, pullRequest: pullRequest })
+                        );
+                    })
+                )
             );
         }
 
