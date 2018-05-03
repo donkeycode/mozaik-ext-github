@@ -7,6 +7,7 @@ import FaPlay from  'react-icons/lib/fa/play';
 import FaBackward from 'react-icons/lib/fa/backward';
 import FaForward from 'react-icons/lib/fa/forward';
 import PullRequestDC from '../pull-requests/PullRequestDC';
+import Reviewer from '../pull-requests/Reviewer';
 
 export default class LastPrMultiRepos extends Component {
     static PropTypes = {
@@ -80,6 +81,36 @@ export default class LastPrMultiRepos extends Component {
         return lastPullRequests;
     }
 
+    getAllReviewers() {
+        const reviewers = [];
+        const lastPullRequests = this.getAllPullRequests();
+
+        for (var i = 0; i < lastPullRequests.length; i++) {
+            if (lastPullRequests[i].requested_reviewers) {
+                for (var j = 0; j < lastPullRequests[i].requested_reviewers.length; j++) {
+                    this.addOrUpdateReviewer(reviewers, lastPullRequests[i].requested_reviewers[j]);
+                }
+            }
+        }
+
+        return reviewers;
+    }
+
+    addOrUpdateReviewer(reviewers, reviewer) {
+        for (var i = 0; i < reviewers.length; i++) {
+            if (reviewers[i].id === reviewer.id) {
+                reviewers[i]['nbRequest'] += 1;
+
+                return;
+            }
+        }
+
+        reviewer['nbRequest'] = 1;
+        reviewers.push(reviewer);
+
+        return;
+    }
+
     goNextPage() {
         if (this.props.apiData) {
             this.props.currentPage = (this.props.currentPage < this.getLastPullRequests().length - 1) ? this.props.currentPage + 1 : 0;
@@ -115,6 +146,7 @@ export default class LastPrMultiRepos extends Component {
         let viewId = view === 'tv' ? 'tv' : 'screen';
         if (apiData) {
             const lastPullRequests = this.getLastPullRequests();
+            const reviewers = this.getAllReviewers(lastPullRequests);
 
             count = (
                 <div>
@@ -124,9 +156,16 @@ export default class LastPrMultiRepos extends Component {
                         <a onClick={this.playOrPause}>{this.props.playing ? <FaPause /> : <FaPlay />}</a>
                         <a onClick={this.goNextPage}><FaForward /></a>
                     </div>
-                </div>);
+                </div>
+            );
+
             body = (
                 <div id="prs">
+                    <div id="reviewers">
+                        {reviewers.map(reviewer =>
+                            <Reviewer reviewer={reviewer} display_nb_request={true} />
+                        )}
+                    </div>
                     <div className={viewId}>
                         {lastPullRequests[this.props.currentPage].map(pullRequest =>
                             <div className="pull-request">
@@ -135,7 +174,7 @@ export default class LastPrMultiRepos extends Component {
                         )}
                     </div>
                 </div>
-            )
+            );
         }
 
         return (

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import ClockIcon from 'react-icons/lib/fa/clock-o';
 import { WidgetLabel, WidgetListItem, WidgetAvatar } from '@mozaik/ui';
+import Reviewer from './Reviewer';
 
 var PullRequestDC = function (_Component) {
     _inherits(PullRequestDC, _Component);
@@ -36,19 +37,7 @@ var PullRequestDC = function (_Component) {
                 'div',
                 { className: 'reviewers' },
                 requested_reviewers.map(function (reviewer) {
-                    return React.createElement(
-                        'div',
-                        { className: 'reviewer' },
-                        React.createElement(
-                            'a',
-                            { className: 'avatar', href: reviewer.html_url, target: '_blank' },
-                            React.createElement(
-                                WidgetAvatar,
-                                { href: reviewer.html_url, size: '3vmin' },
-                                React.createElement('img', { src: reviewer.avatar_url, alt: reviewer.login })
-                            )
-                        )
-                    );
+                    return React.createElement(Reviewer, { reviewer: reviewer });
                 })
             );
         }

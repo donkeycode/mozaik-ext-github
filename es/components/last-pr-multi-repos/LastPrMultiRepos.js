@@ -13,6 +13,7 @@ import FaPlay from 'react-icons/lib/fa/play';
 import FaBackward from 'react-icons/lib/fa/backward';
 import FaForward from 'react-icons/lib/fa/forward';
 import PullRequestDC from '../pull-requests/PullRequestDC';
+import Reviewer from '../pull-requests/Reviewer';
 
 var LastPrMultiRepos = function (_Component) {
     _inherits(LastPrMultiRepos, _Component);
@@ -83,6 +84,36 @@ var LastPrMultiRepos = function (_Component) {
         return lastPullRequests;
     };
 
+    LastPrMultiRepos.prototype.getAllReviewers = function getAllReviewers() {
+        var reviewers = [];
+        var lastPullRequests = this.getAllPullRequests();
+
+        for (var i = 0; i < lastPullRequests.length; i++) {
+            if (lastPullRequests[i].requested_reviewers) {
+                for (var j = 0; j < lastPullRequests[i].requested_reviewers.length; j++) {
+                    this.addOrUpdateReviewer(reviewers, lastPullRequests[i].requested_reviewers[j]);
+                }
+            }
+        }
+
+        return reviewers;
+    };
+
+    LastPrMultiRepos.prototype.addOrUpdateReviewer = function addOrUpdateReviewer(reviewers, reviewer) {
+        for (var i = 0; i < reviewers.length; i++) {
+            if (reviewers[i].id === reviewer.id) {
+                reviewers[i]['nbRequest'] += 1;
+
+                return;
+            }
+        }
+
+        reviewer['nbRequest'] = 1;
+        reviewers.push(reviewer);
+
+        return;
+    };
+
     LastPrMultiRepos.prototype.goNextPage = function goNextPage() {
         if (this.props.apiData) {
             this.props.currentPage = this.props.currentPage < this.getLastPullRequests().length - 1 ? this.props.currentPage + 1 : 0;
@@ -127,6 +158,7 @@ var LastPrMultiRepos = function (_Component) {
         var viewId = view === 'tv' ? 'tv' : 'screen';
         if (apiData) {
             var lastPullRequests = this.getLastPullRequests();
+            var reviewers = this.getAllReviewers(lastPullRequests);
 
             count = React.createElement(
                 'div',
@@ -156,9 +188,17 @@ var LastPrMultiRepos = function (_Component) {
                     )
                 )
             );
+
             body = React.createElement(
                 'div',
                 { id: 'prs' },
+                React.createElement(
+                    'div',
+                    { id: 'reviewers' },
+                    reviewers.map(function (reviewer) {
+                        return React.createElement(Reviewer, { reviewer: reviewer, display_nb_request: true });
+                    })
+                ),
                 React.createElement(
                     'div',
                     { className: viewId },
