@@ -50,7 +50,10 @@ var LastPrMultiRepos = function (_Component) {
 
         for (var i = 0; i < apiData.length; i++) {
             for (var j = 0; j < apiData[i].pullRequests.length; j++) {
-                prs.push(apiData[i].pullRequests[j]);
+                var pr = apiData[i].pullRequests[j];
+                if (pr.requested_reviewers && pr.requested_reviewers.length) {
+                    prs.push(pr);
+                }
             }
         }
         prs.sort(function (a, b) {
